@@ -3,18 +3,28 @@ body{
     margin: 0;
     font-family:'Montserrat', sans-serif ;
 }
-
+/* inicio da pagina de login*/
 .main-login{
     width: 100vw;
     height: 100vh;
-    background: #8e9fff;
+    background: #7d5fc9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-login{
+    box-sizing: center;
+    width: 50vw;
+    height: 50vh;
+    background: #7d5fc9;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .left-login{
-    width: 40vw;
+    width: 30vw;
     height: 50vh;
     display: flex;
     justify-content: center;
@@ -23,7 +33,7 @@ body{
 }
 
 .left-login > h1{
-    color: #053ea1;
+    color: #045aee;
 }
 
 .left-login-image{
@@ -31,7 +41,7 @@ body{
 }
 
 .right-login{
-    width: 60vw;
+    width: 50vw;
     height: 50vh;
     display: flex;
     justify-content: center;
@@ -44,14 +54,14 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;
+    padding: 25px 35px;
     background: #2f2841;
     box-shadow: 0px 10px 40px #00000056;
 
 }
 
 .card-login > h1{
-    color: #053ea1;
+    color: #045aee;
     font-weight: 800;
     margin: 0;
 }
@@ -99,4 +109,10 @@ body{
     background: #053ea1;
     cursor: pointer;
     box-shadow: 0px 10px 40px -12px #080cfd52;
+}
+/* fim da pagina de login*/
+.main-app{
+    width: 100vw;
+    height: 100vh;
+    background: red; 
 }

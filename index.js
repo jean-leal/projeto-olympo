@@ -8,6 +8,8 @@ const app = express();
 
 let login = 'admin';
 let password = '123';
+app.use(express.static(__dirname + '/css'));
+app.use(express.static(__dirname + '/image'));
 
 app.use(session({secret: 'sldkn1f3l2d6slnsnfskdnmflk'}));
 app.use(bodyParser.urlencoded({extended:true}));
