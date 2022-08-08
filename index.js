@@ -2,13 +2,14 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const routes = require('./src/routes');
 
 const port = 3000;
 let path = require('path');
 const app = express();
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/local',
+mongoose.connect('mongodb+srv://admin:086015@cluster0.k0ngrzw.mongodb.net/projectDB?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -53,6 +54,7 @@ app.get('/', (req, res) => {
     }
 })
 
+app.use(routes);
 app.listen(port, () => {
     console.log('servidor rodando');
 })
