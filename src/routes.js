@@ -2,10 +2,15 @@ const express = require('express');
 
 const routes = express.Router();
 
+routes.get('/', function(req, res){
+    res.json({message:'Olá Mundo'})
+});
+
+/*
 const User = require('./controllers/users.controllers');
 const Product = require('./controllers/products.controllers');
 
-
+routes.get('/', User.index);
 //rotas de Usuarios
 routes.post('/api/users', User.create);
 routes.get('/api/users', User.index);
@@ -19,6 +24,8 @@ routes.get('/api/product', Product.index);
 routes.get('/api/product.details', Product.details);
 routes.delete('/api/product:_id', Product.delete)
 routes.put('/api/product', Product.update);
+*/
+
 
 
 

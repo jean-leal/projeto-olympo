@@ -1,5 +1,16 @@
 const User = require('../models/user.model');
 
+module.export = {
+    index.get('/', function(req, res){
+        res.json({message:'Olá Mundo'})
+    })
+    create(req,res){
+        let msg = '';
+        res.json({mgs:msg});
+    }
+}
+
+/*
 module.exports = {
     async index(req, res){
         const user = await User.find();
@@ -36,3 +47,4 @@ module.exports = {
         res.json(user);
     }
 }
+*/
