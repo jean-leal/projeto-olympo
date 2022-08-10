@@ -138,7 +138,9 @@
     "x256": "^0.0.2"
   },
   "scripts": {
-    "dev": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "start": "node ./index.js"
   },
   "repository": {
@@ -150,6 +152,7 @@
   },
   "homepage": "https://github.com/jean-leal/projeto-olympo#readme",
   "devDependencies": {
+    "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   },
   "main": "index.js",

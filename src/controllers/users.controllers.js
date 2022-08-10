@@ -19,7 +19,7 @@ module.exports = {
             return res.status(500).json(user);
         }
     },
-    async detaisl(req, res){
+    async details(req, res){
         const {_id} = req.params;
         const user = await User.findOne({_id});
         res.json(user);

@@ -35,8 +35,8 @@ export default function Rotas(){
                 
                 {/* Rota Usuarios*/}
                 <Route path="/admin/users" element={<Users/>} />
-                <Route path="/admin/products/register" element={<UsersRegister/>} />
-                <Route path="/admin/products/editar/:idProduto" element={<UsersEdit/>} />
+                <Route path="/admin/users/register" element={<UsersRegister/>} />
+                <Route path="/admin/users/edit/:idProduto" element={<UsersEdit/>} />
 
             </Routes>
         </BrowserRouter>

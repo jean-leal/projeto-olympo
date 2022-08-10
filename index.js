@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./src/routes');
 
-const port = 3000;
+const port = 8080;
 let path = require('path');
 const app = express();
 

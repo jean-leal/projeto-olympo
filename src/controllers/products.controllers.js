@@ -18,7 +18,7 @@ module.exports = {
             return res.status(500).json(product);
         }
     },
-    async detaisl(req, res){
+    async details(req, res){
         const {_id} = req.params;
         const product = await Product.findOne({_id});
         res.json(product);
