@@ -31,14 +31,17 @@ export default function UserRegister() {
       user_password : password,
       user_type : type}
     
-      const response = await api.post('/', data);
-      console.log(response)
+      if(name!=='' && login!=='' && password!=='' && type!==''){
+        const response = await api.post('/api/users', data);
+      
       if (response.status === 200){
-        alert('deu certo o cadastro de usuário')
+        window.location.href='/admin/users'
       }else{
-        alert('erro de cadastro de usuário')
+        alert('erro de cadastro de usuário');
+      } }else{
+        alert('Preencha todos os dados!');
       }
-      return Promise.reject(response);
+      
   }
 
   return (
@@ -120,7 +123,7 @@ export default function UserRegister() {
                           onChange={e => setPassword (e.target.value)}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={12}>
+                        <Grid item xs={12} sm={12}>
                         <Button onClick={handleSubmit} variant="contained">Salvar</Button>
                       </Grid>
                     </Grid>
