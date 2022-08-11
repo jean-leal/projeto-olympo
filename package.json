@@ -91,6 +91,7 @@
     "mongoose": "^6.5.1",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
+    "node-fetch": "^3.2.10",
     "noop6": "^1.0.9",
     "object-inspect": "^1.12.2",
     "on-finished": "^2.4.1",

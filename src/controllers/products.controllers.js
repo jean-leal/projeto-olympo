@@ -8,15 +8,17 @@ module.exports = {
     async create(req, res){
         const {product_code, product_name, product_description, product_price, product_amount} = req.body;
         let data = {};
-        let product = Product.findOne({product_code});
+        let product = await Product.findOne({product_code});
 
         if(!product){
             data = {product_code, product_name, product_description, product_price, product_amount};
+
             product = await Product.create(data);
             return res.status(200).json(product);
         }else{
-            return res.status(500).json(product);
+            return res.status(500).json({msg:"falha de cadastro"});
         }
+        
     },
     async details(req, res){
         const {_id} = req.params;
