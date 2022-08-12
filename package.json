@@ -92,7 +92,9 @@
     "mongoose": "^6.5.1",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
+    "node-dev": "^7.4.3",
     "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.19",
     "noop6": "^1.0.9",
     "object-inspect": "^1.12.2",
     "on-finished": "^2.4.1",
@@ -111,6 +113,7 @@
     "random-bytes": "^1.0.0",
     "range-parser": "^1.2.1",
     "raw-body": "^2.5.1",
+    "react-scripts": "^5.0.1",
     "read-utf8": "^1.2.10",
     "regex-escape": "^3.4.10",
     "remove-blank-lines": "^1.4.1",
@@ -139,13 +142,14 @@
     "vows": "^0.8.3",
     "wrap-text": "^1.0.9",
     "wrappy": "^1.0.2",
-    "x256": "^0.0.2"
+    "x256": "^0.0.2",
+    "xxx": "^0.0.1"
   },
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "start": "node ./index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -156,8 +160,7 @@
   },
   "homepage": "https://github.com/jean-leal/projeto-olympo#readme",
   "devDependencies": {
-    "concurrently": "^7.3.0",
-    "nodemon": "^2.0.19"
+    "concurrently": "^7.3.0"
   },
   "main": "index.js",
   "author": "",

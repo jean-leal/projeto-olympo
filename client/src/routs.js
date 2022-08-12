@@ -31,12 +31,12 @@ export default function Rotas(){
 
                 <Route path="/admin/products" element={<Products/>} />
                 <Route path="/admin/products/register"  element={<ProductsRegister/>} />
-                <Route path="/admin/products/editar/:idProduto" element={<ProductsEdit/>} />
+                <Route path="/admin/products/editar/:idProduct" element={<ProductsEdit/>} />
                 
                 {/* Rota Usuarios*/}
                 <Route path="/admin/users" element={<Users/>} />
                 <Route path="/admin/users/register" element={<UsersRegister/>} />
-                <Route path="/admin/users/edit/:idProduto" element={<UsersEdit/>} />
+                <Route path="/admin/users/edit/:idUser" element={<UsersEdit/>} />
 
             </Routes>
         </BrowserRouter>
