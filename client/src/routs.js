@@ -12,13 +12,14 @@ import ProductsRegister from './pages/admin/products/products.register';
 import Users from './pages/admin/users';
 import UsersEdit from './pages/admin/users/users.edit';
 import UsersRegister from './pages/admin/users/users.register';
+import Login from './pages/admin/login';
 
 //IMPORT CLIENT
 import Home from './pages/client/home';
 import ProductDetails from './pages/client/products/product.details';
 
 export default function Rotas(){
-    
+
     return(
         <BrowserRouter>
             <Routes>
@@ -27,6 +28,7 @@ export default function Rotas(){
                 <Route path="/produtos/:idProduct" element={<ProductDetails/>} />
 
                 {/* Rota Admin*/}
+                <Route path="/admin/login" element={<Login/>} />
                 <Route path="/admin" element={<Dashboard/>} />
 
                 <Route path="/admin/products" element={<Products/>} />

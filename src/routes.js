@@ -14,6 +14,9 @@ routes.get('/api/users',User.index);
 routes.get('/api/users.details/:_id', User.details);
 routes.delete('/api/users/:_id', User.delete);
 routes.put('/api/users', User.update);
+routes.post('/api/users/login',User.login);
+routes.get('/api/users/checktoken',User.checkToken);
+
 
 //rotas de Produtos
 routes.post('/api/products',Product.create);

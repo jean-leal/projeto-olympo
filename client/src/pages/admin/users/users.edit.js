@@ -50,7 +50,7 @@ export default function UserRegister() {
       _id:idUser
     }
     
-      if(name!=='' && login!=='' && password!=='' && type!==''){
+      if(name !=='' && login!=='' && password!=='' && type!==''){
         const response = await api.put('/api/users', data);
       
       if (response.status === 200){
