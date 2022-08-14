@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import MenuAdmin from '../../../components/menu-admin';
-import Footer from '../../../components/copyright-admin';
 
 const mdTheme = createTheme();
 
@@ -32,7 +31,6 @@ export default function DashboardContent() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Grid container spacing={3}>        
               </Grid>
-              <Footer sx={{ pt: 4 }} />
             </Container>
           </Box>
         </Box>

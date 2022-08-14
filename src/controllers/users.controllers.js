@@ -1,5 +1,6 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const destroy = require('destroy');
 const secret = "mysecret";
 
 module.exports = {
@@ -46,7 +47,7 @@ module.exports = {
                 console.log(err);
                 res.status(200).json({error: ' Erro no servidor, tente novamente!'})
             }else if (!user){
-                res.status(200).json({status:2, error:' Login não encontrado no banco de dados'})
+                res.status(200).json({status:1, error:' Login não encontrado no banco de dados'})
             }else{
                 user.isCorrectPassword(password, async function(err, same){
                     if (err){
@@ -78,5 +79,14 @@ module.exports = {
                 }
             })
         }
+    }, 
+    async destroyToken(req,res){
+        const token = req.headers.token;
+        if (token){
+            res.cookie('token', null, {httpOnly:true});
+        }else{
+            req.status(401).sed('Logout não autorizado!');
+        }
+        res.send('Sessão finalzada com sucesso!');
     }
 }

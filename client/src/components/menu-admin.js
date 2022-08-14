@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 
 
 import { mainListItems, secondaryListItems } from './list-menu-admin';
+import { getUserName } from '../services/auth';
 
 
 
@@ -100,6 +101,9 @@ export default function ManuAdmin({title}){
               >
                 {title}
               </Typography>
+              
+              {getUserName()}
+
             </Toolbar>
           </AppBar>
       <Drawer variant="permanent" open={open}>

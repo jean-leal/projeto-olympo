@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import MenuAdmin from '../../../components/menu-admin';
-import Footer from '../../../components/copyright-admin';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -110,7 +109,6 @@ export default function ListUsers() {
                   </Paper>
               </Grid>       
               </Grid>
-              <Footer sx={{ pt: 4 }} />
             </Container>
           </Box>
         </Box>

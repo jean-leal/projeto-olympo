@@ -9,26 +9,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import api from '../../../services/api';
-import { loginUser, setUserId, setUserName} from '../../../services/auth'
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { loginUser, setUserId, setUserName} from '../../../services/auth';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function Login() {
   
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit(){
+    setLoading(true);
     await api.post('/api/users/login', {login, password})
     .then(res=>{
         if (res.status === 200){
@@ -41,8 +43,10 @@ export default function SignIn() {
             }else if (res.data.status === 2){
                 alert('Atenção'+ res.data.error);
             }
+            setLoading(true); 
         }else{
             alert('Erro de servidor');
+            setLoading(true);
         }
     })
   }
@@ -63,7 +67,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
             <TextField
               margin="normal"
@@ -77,7 +81,7 @@ export default function SignIn() {
               value={login}
               onChange={e => setLogin(e.target.value)}
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -88,19 +92,40 @@ export default function SignIn() {
               autoComplete="none"
               value={password}
               onChange={e => setPassword(e.target.value)}
-            />
+            /> */}
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{width:'100%', marginTop:10}}>
+              <InputLabel htmlFor="id-password">Senha</InputLabel>
+              <OutlinedInput
+                id="id-password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={e => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={120}
+              />
+              </FormControl>
             
             <Button
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
+              disabled={loading}
             >
-              Logar
+             {loading?<CircularProgress />:"Logar"} 
             </Button>
             
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import MenuAdmin from '../../../components/menu-admin';
-import Copyright from '../../../components/copyright-admin';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
@@ -50,13 +49,13 @@ export default function UserRegister() {
       _id:idUser
     }
     
-      if(name !=='' && login!=='' && password!=='' && type!==''){
+      if(name!=='' && login!=='' && password!=='' && type!==''){
         const response = await api.put('/api/users', data);
       
       if (response.status === 200){
-        window.location.href='/admin/users'
+        window.location.href='/'
       }else{
-        alert('Erro de atualização de usuário');
+        alert('Erro de atualização de usuário!');
       } }else{
         alert('Preencha todos os dados!');
       }
@@ -150,7 +149,6 @@ export default function UserRegister() {
                 </Grid>     
                  
               </Grid>
-              <Copyright sx={{ pt: 4 }} />
             </Container>
           </Box>
         </Box>

@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import MenuAdmin from '../../../components/menu-admin';
-import Copyright from '../../../components/copyright-admin';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
@@ -131,7 +130,6 @@ export default function UserRegister() {
                 </Grid>     
                  
               </Grid>
-              <Copyright sx={{ pt: 4 }} />
             </Container>
           </Box>
         </Box>
