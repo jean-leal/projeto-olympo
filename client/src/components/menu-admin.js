@@ -16,9 +16,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
-
-
-
 import { mainListItems, secondaryListItems } from './list-menu-admin';
 import { getUserName } from '../services/auth';
 
@@ -76,8 +73,8 @@ export default function ManuAdmin({ title }) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [openList, setOpenList] = React.useState(false);
 
+  const [openList, setOpenList] = React.useState(false);
   const handleClick = () => {
     setOpenList(!openList);
   };
@@ -131,7 +128,7 @@ export default function ManuAdmin({ title }) {
         <Divider />
         <List component="nav">
           {mainListItems}
-          
+
           <ListItemButton onClick={handleClick}>
             <ListItemIcon>
               <AppRegistrationIcon/>
@@ -141,13 +138,28 @@ export default function ManuAdmin({ title }) {
           </ListItemButton>
           <Collapse in={openList}>
             <List disablePadding>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/users/register'}>
+                <ListItemText primary="Usuários"  />
+              </ListItemButton>
+            </List>
+            <List disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Usuários" />
+                <ListItemText primary="Fornecedores" />
               </ListItemButton>
             </List>
             <List disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Produtos" />
+              </ListItemButton>
+            </List>
+            <List disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Grupo de Produtos" />
+              </ListItemButton>
+            </List>
+            <List disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Subgrupo de Produtos" />
               </ListItemButton>
             </List>
           </Collapse>
