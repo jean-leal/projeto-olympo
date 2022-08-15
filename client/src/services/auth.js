@@ -3,8 +3,8 @@ export const USER_ID = '&user-id';
 export const USER_NAME = '&user-name';
 export const USER_TYPE = '&user-type';
 
-export const loginUser = token => { localStorage.setItem(TOKEN_KEY, token)};
-export const logout = ()=>{localStorage.clear()};
+export const tokenUser = token => { localStorage.setItem(TOKEN_KEY, token) };
+export const logout = () => { localStorage.clear() };
 
 export const setUserId = id => localStorage.setItem(USER_ID, id);
 export const getUserId = () => localStorage.getItem(USER_ID);
