@@ -20,15 +20,15 @@ import api from '../../../services/api';
 
 const mdTheme = createTheme();
 
-export default function ListProducts() {
+export default function ListGroups() {
 
-  const [products, setProducts] = useState([]);
+  const [groups, setGroups] = useState([]);
   useEffect(()=>{
-    async function loadProduct(){
-      const response = await api.get('/api/products');
-      setProducts(response.data);
+    async function loadGroups(){
+      const response = await api.get('/api/groups');
+      setGroups(response.data);
     }
-    loadProduct();
+    loadGroups();
   }, [])
 
   const [page, setPage] = React.useState(0);
@@ -43,12 +43,24 @@ export default function ListProducts() {
     setPage(0);
   };
 
+  //função para deletar grupo
+  async function handleDelete(id){
+    if(window.confirm('Deseja realmente excluir este usuário? ')){
+      var result = await api.delete('/api/groups/'+id);
+      if(result.status === 200){
+        window.location.href = '/admin/groups'
+      }else{
+        alert('Ocorreu um erro. Por favor tente novamente');
+      }
+    }
+   }
+
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline /> 
-        <MenuAdmin title={'PRODUTOS'}/>
+        <MenuAdmin title={'GRUPOS'}/>
           <Box
             component="main"
             sx={{
@@ -66,35 +78,30 @@ export default function ListProducts() {
               <Grid container spacing={3}> 
               <Grid item sm={12}>              
               <Paper sx={{ p: 2 }}>
-                <h2>Produtos</h2>
+                <h2>Listagem de Grupos</h2>
                 <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                     <TableRow>
                       <TableCell>Código</TableCell>
-                      <TableCell>Nome</TableCell>
-                      <TableCell align="center">Descrição</TableCell>
-                      <TableCell align="center">Valor</TableCell>
-                      <TableCell align="center">Quantidade</TableCell>
-                      <TableCell align="center">Data de Cadastro</TableCell>  
+                      <TableCell>Nome</TableCell>                    
                       <TableCell align="center">Opções</TableCell>                    
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                      {products.map((row) => (
+                      {groups.map((row) => (
                         <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                              <TableCell component="th" scope="row">{row.product_code}</TableCell>
-                              <TableCell component="th" scope="row">{row.product_name}</TableCell>
-                              <TableCell align="center">{row.product_description}</TableCell>
-                              <TableCell align="center">{row.product_price}</TableCell>
-                              <TableCell align="center">{row.product_amount}</TableCell>
-                              <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
+                              <TableCell component="th" scope="row">{row.group_code}</TableCell>
+                              <TableCell component="th" scope="row">{row.group_name}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/products/edit/'+row._id}>Atualizar</Button>
+                                  <Button color="primary" href={'/admin/groups/edit/'+row._id}>Atualizar</Button>
+                                  <Button color="error" onClick={()=> handleDelete(row._id)}>Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>
+                              
                         </TableRow>
+                         
                       ))}
                     </TableBody>
                   </Table>
@@ -102,12 +109,17 @@ export default function ListProducts() {
                 <TablePagination
                   rowsPerPageOptions={[10, 25, 100]}
                   component="div"
-                  count={products.length}
+                  count={groups.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                <Grid>             
+                  <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                    <Button color="primary" href={'/admin/groups/register'}>NOVO CADASTRO</Button>
+                  </ButtonGroup>
+                </Grid> 
               </Paper>
 
               </Grid>       

@@ -148,13 +148,13 @@ export default function ManuAdmin({ title }) {
               </ListItemButton>
             </List>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/products/register'}>
                 <ListItemText primary="Produtos" />
               </ListItemButton>
             </List>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Grupo de Produtos" />
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/groups'} >
+                <ListItemText primary="Grupo de Produtos"  />
               </ListItemButton>
             </List>
             <List disablePadding>

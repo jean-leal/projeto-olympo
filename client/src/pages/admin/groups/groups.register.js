@@ -13,28 +13,23 @@ import api from '../../../services/api';
 
 const mdTheme = createTheme();
 
-export default function UserRegister() {
+export default function GroupsRegister() {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [amount, setAmount] = useState('');
 
   async function handleSubmit(){
     const data = {
-      product_code:code,
-      product_name : name,
-      product_description : description,
-      product_price : price,
-      product_amount : amount}
+      group_code:code,
+      group_name:name
+    }
     
-      if(code!=='' && name!=='' && description!=='' && price!=='' && amount!==''){
-        const response = await api.post('/api/products', data);
+      if(code!=='' && name!==''){
+        const response = await api.post('/api/groups', data);
       
       if (response.status === 200){
-        window.location.href='/admin/products'
+        window.location.href='/admin/groups'
       }else{
-        alert('erro de cadastro de produto');
+        alert('erro de cadastro de grupo');
       } }else{
         alert('Preencha todos os dados!');
       }
@@ -45,7 +40,7 @@ export default function UserRegister() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline /> 
-        <MenuAdmin title = {'PRODUTOS'} />
+        <MenuAdmin title = {'GRUPOS'} />
           <Box
             component="main"
             sx={{
@@ -91,48 +86,9 @@ export default function UserRegister() {
                           onChange={e => setName (e.target.value)}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={3}>
-                      <TextField
-                          required
-                          id="description"
-                          name="description"
-                          label="Descrição"
-                          fullWidth
-                          autoComplete="none"
-                          variant="standard"
-                          value={description}
-                          onChange={e => setDescription (e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <TextField
-                          required
-                          id="price"
-                          name="price"
-                          label="Preço"
-                          fullWidth
-                          autoComplete="none"
-                          variant="standard"
-                          value={price}
-                          onChange={e => setPrice (e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <TextField
-                          required
-                          id="amount"
-                          name="amount"
-                          label="Quantidade"
-                          fullWidth
-                          autoComplete="none"
-                          variant="standard"
-                          value={amount}
-                          onChange={e => setAmount (e.target.value)}
-                        />
-                      </Grid>
                       <Grid item xs={12} sm={12}>                        
                           <Button onClick={handleSubmit} variant="contained">Salvar</Button>                             
-                          <Button variant="contained" color = "error" href="/admin/products">Cancelar</Button>                       
+                          <Button variant="contained" color = "error" href="/admin/groups">Cancelar</Button>                       
                       </Grid>
                     </Grid>
                   </Paper>

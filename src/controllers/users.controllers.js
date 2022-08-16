@@ -44,7 +44,6 @@ module.exports = {
         const { login, password } = req.body;
 
         User.findOne({ user_login: login, user_type: 1 }, function (err, user) {
-            console.log(user)
             if (err) {
                 console.log(err);
                 res.status(200).json({ error: ' Erro no servidor, tente novamente!' })
