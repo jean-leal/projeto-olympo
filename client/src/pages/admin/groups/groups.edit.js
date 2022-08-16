@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 
 const mdTheme = createTheme();
 
-export default function UserRegister() {
+export default function GroupRegister() {
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
 
@@ -71,7 +71,7 @@ export default function UserRegister() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
             <Grid container spacing={3}>
               <Grid item sm={12}>
                 <Paper sx={{ p: 2 }}>

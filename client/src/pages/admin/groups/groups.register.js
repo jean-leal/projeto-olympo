@@ -54,11 +54,11 @@ export default function GroupsRegister() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
               <Grid container spacing={3}>    
                 <Grid item sm={12}>
                   <Paper sx={{ p: 2 }}>
-                    <h2>Cadastro de Produtos</h2>
+                    <h2>Cadastro de Grupos</h2>
                     <Grid container spacing={3}> 
                       <Grid item xs={12} sm={12}>
                         <TextField

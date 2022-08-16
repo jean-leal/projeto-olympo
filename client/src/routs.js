@@ -13,6 +13,10 @@ import Groups from './pages/admin/groups';
 import GroupsEdit from './pages/admin/groups/groups.edit';
 import GroupsRegister from './pages/admin/groups/groups.register';
 
+import Subgroups from './pages/admin/subgroups';
+import SubgroupsEdit from './pages/admin/subgroups/subgroups.edit';
+import SubgroupsRegister from './pages/admin/subgroups/subgroups.register';
+
 import Users from './pages/admin/users';
 import UsersEdit from './pages/admin/users/users.edit';
 import UsersRegister from './pages/admin/users/users.register';
@@ -47,6 +51,10 @@ export default function Rotas() {
                 <Route path="/admin/groups" element={<PrivateRoute> <Groups /> </PrivateRoute>} />
                 <Route path="/admin/groups/register" element={<PrivateRoute> <GroupsRegister /> </PrivateRoute>} />
                 <Route path="/admin/groups/edit/:idGroup" element={<PrivateRoute> <GroupsEdit /> </PrivateRoute>} />
+
+                <Route path="/admin/subgroups" element={<PrivateRoute> <Subgroups /> </PrivateRoute>} />
+                <Route path="/admin/subgroups/register" element={<PrivateRoute> <SubgroupsRegister /> </PrivateRoute>} />
+                <Route path="/admin/subgroups/edit/:idSubgroup" element={<PrivateRoute> <SubgroupsEdit /> </PrivateRoute>} />
 
 
             </Routes>

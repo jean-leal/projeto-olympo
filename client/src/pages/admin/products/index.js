@@ -62,7 +62,7 @@ export default function ListProducts() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
               <Grid container spacing={3}> 
               <Grid item sm={12}>              
               <Paper sx={{ p: 2 }}>
@@ -73,9 +73,12 @@ export default function ListProducts() {
                     <TableRow>
                       <TableCell>Código</TableCell>
                       <TableCell>Nome</TableCell>
-                      <TableCell align="center">Descrição</TableCell>
-                      <TableCell align="center">Valor</TableCell>
-                      <TableCell align="center">Quantidade</TableCell>
+                      <TableCell align="center">Unidade</TableCell>
+                      <TableCell align="center">Grupo</TableCell>
+                      <TableCell align="center">Subgrupo</TableCell>
+                      <TableCell align="center">Estoque</TableCell>
+                      <TableCell align="center">Preço</TableCell>
+                      <TableCell align="center">Status</TableCell>
                       <TableCell align="center">Data de Cadastro</TableCell>  
                       <TableCell align="center">Opções</TableCell>                    
                     </TableRow>
@@ -85,13 +88,16 @@ export default function ListProducts() {
                         <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                               <TableCell component="th" scope="row">{row.product_code}</TableCell>
                               <TableCell component="th" scope="row">{row.product_name}</TableCell>
-                              <TableCell align="center">{row.product_description}</TableCell>
-                              <TableCell align="center">{row.product_price}</TableCell>
+                              <TableCell align="center">---</TableCell>
+                              <TableCell align="center">---</TableCell>
+                              <TableCell align="center">---</TableCell>
                               <TableCell align="center">{row.product_amount}</TableCell>
+                              <TableCell align="center">{row.product_price}</TableCell>
+                              <TableCell align="center">---</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/products/edit/'+row._id}>Atualizar</Button>
+                                  <Button color="primary" href={'/admin/products/edit/'+row._id}>Editar</Button>
                                 </ButtonGroup>
                               </TableCell>
                         </TableRow>
@@ -108,6 +114,11 @@ export default function ListProducts() {
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+              <Grid sx={{ mt: 2, mb: 2 }}>             
+                  <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                    <Button color="primary" href={'/admin/products/register'}>NOVO CADASTRO</Button>
+                  </ButtonGroup>
+                </Grid> 
               </Paper>
 
               </Grid>       

@@ -5,6 +5,8 @@ const routes = express.Router();
 const User = require ('./controllers/users.controllers');
 const Product = require('./controllers/products.controllers');
 const Group = require('./controllers/groups.controllers');
+const Subgroup = require('./controllers/subgroups.controllers');
+
 
 routes.get('/',User.index);
 
@@ -35,5 +37,11 @@ routes.get('/api/groups.details/:_id', Group.details);
 routes.delete('/api/groups/:_id', Group.delete);
 routes.put('/api/groups', Group.update);
 
+//rotas de Grupos
+routes.post('/api/subgroups',Subgroup.create);
+routes.get('/api/subgroups',Subgroup.index);
+routes.get('/api/subgroups.details/:_id', Subgroup.details);
+routes.delete('/api/subgroups/:_id', Subgroup.delete);
+routes.put('/api/subgroups', Subgroup.update);
 
 module.exports = routes;

@@ -13,7 +13,7 @@ import api from '../../../services/api';
 
 const mdTheme = createTheme();
 
-export default function UserRegister() {
+export default function ProductsRegister() {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -59,13 +59,13 @@ export default function UserRegister() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
               <Grid container spacing={3}>    
                 <Grid item sm={12}>
                   <Paper sx={{ p: 2 }}>
-                    <h2>Cadastro de Produtos</h2>
+                    <h2>Cadastro de Produto</h2>
                     <Grid container spacing={3}> 
-                      <Grid item xs={12} sm={12}>
+                      <Grid item xs={12} sm={4}>
                         <TextField
                           required
                           id="code"
@@ -78,7 +78,31 @@ export default function UserRegister() {
                           onChange={e => setCode (e.target.value)}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={4}>
+                      <TextField
+                          required
+                          id="unity"
+                          name="unity"
+                          label="Unidade"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                      <TextField
+                          required
+                          id="status"
+                          name="status"
+                          label="Status"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
                         <TextField
                           required
                           id="name"
@@ -91,17 +115,29 @@ export default function UserRegister() {
                           onChange={e => setName (e.target.value)}
                         />
                       </Grid>
+                      
                       <Grid item xs={12} sm={3}>
                       <TextField
                           required
-                          id="description"
-                          name="description"
-                          label="Descrição"
+                          id="group"
+                          name="group"
+                          label="Grupo"
                           fullWidth
                           autoComplete="none"
                           variant="standard"
-                          value={description}
-                          onChange={e => setDescription (e.target.value)}
+                          
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={3}>
+                      <TextField
+                          required
+                          id="subgroup"
+                          name="subgroup"
+                          label="Subgrupo"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          
                         />
                       </Grid>
                       <Grid item xs={12} sm={3}>
@@ -122,7 +158,7 @@ export default function UserRegister() {
                           required
                           id="amount"
                           name="amount"
-                          label="Quantidade"
+                          label="Quantidade Estoque"
                           fullWidth
                           autoComplete="none"
                           variant="standard"

@@ -16,6 +16,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
 import { mainListItems, secondaryListItems } from './list-menu-admin';
 import { getUserName } from '../services/auth';
 
@@ -78,6 +79,11 @@ export default function ManuAdmin({ title }) {
   const handleClick = () => {
     setOpenList(!openList);
   };
+
+  const [openListALmox, setOpenListAlmox] = React.useState(false);
+  const handleClickAlmox = () => {
+    setOpenListAlmox(!openListALmox);
+  };
   return (
     <>
       <AppBar position="absolute" open={open}>
@@ -138,7 +144,7 @@ export default function ManuAdmin({ title }) {
           </ListItemButton>
           <Collapse in={openList}>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} href={'/admin/users/register'}>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/users'}>
                 <ListItemText primary="Usuários"  />
               </ListItemButton>
             </List>
@@ -148,7 +154,7 @@ export default function ManuAdmin({ title }) {
               </ListItemButton>
             </List>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} href={'/admin/products/register'}>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/products'}>
                 <ListItemText primary="Produtos" />
               </ListItemButton>
             </List>
@@ -158,12 +164,25 @@ export default function ManuAdmin({ title }) {
               </ListItemButton>
             </List>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/subgroups'} >
                 <ListItemText primary="Subgrupo de Produtos" />
               </ListItemButton>
             </List>
           </Collapse>
-          
+          <ListItemButton onClick={handleClickAlmox}>
+            <ListItemIcon>
+              <WarehouseIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Almoxarifado" />
+            {openListALmox ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openListALmox}>
+            <List disablePadding>
+              <ListItemButton sx={{ pl: 4 }} href={''}>
+                <ListItemText primary="Requisição"  />
+              </ListItemButton>
+            </List>
+          </Collapse>
           <Divider sx={{ my: 1 }} />
           {secondaryListItems}
         </List>

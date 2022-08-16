@@ -74,7 +74,7 @@ export default function ListGroups() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
               <Grid container spacing={3}> 
               <Grid item sm={12}>              
               <Paper sx={{ p: 2 }}>
@@ -95,7 +95,7 @@ export default function ListGroups() {
                               <TableCell component="th" scope="row">{row.group_name}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/groups/edit/'+row._id}>Atualizar</Button>
+                                  <Button color="primary" href={'/admin/groups/edit/'+row._id}>Editar</Button>
                                   <Button color="error" onClick={()=> handleDelete(row._id)}>Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>

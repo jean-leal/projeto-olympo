@@ -8,10 +8,6 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuAdmin from '../../../components/menu-admin';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import api from '../../../services/api';
 import { useParams } from 'react-router-dom';
@@ -19,22 +15,23 @@ import { useParams } from 'react-router-dom';
 const mdTheme = createTheme();
 
 export default function UserRegister() {
+  const [code, setCode] = useState('');
   const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [type, setType] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [amount, setAmount] = useState('');
 
-  const { idUser } = useParams();
+  const { idProduct } = useParams();
 
   useEffect(() => {
     async function getUser() {
-      var response = await api.get('/api/products.details/:_id' + idUser);
+      var response = await api.get('/api/products.details/' + idProduct);
 
-      setName(response.data.user_name);
-      setLogin(response.data.user_login);
-      setPassword(response.data.user_password);
-      setType(response.data.user_type);
-
+      setCode(response.data.product_code);
+      setName(response.data.product_name);
+      setDescription(response.data.product_description);
+      setPrice(response.data.product_price);
+      setAmount(response.data.product_amount)
     }
     getUser()
   }
@@ -43,18 +40,19 @@ export default function UserRegister() {
 
   async function handleSubmit() {
     const data = {
-      user_name: name,
-      user_login: login,
-      user_password: password,
-      user_type: type,
-      _id: idUser
+      product_code:code,
+      product_name : name,
+      product_description : description,
+      product_price : price,
+      product_amount : amount,
+      _id : idProduct
     }
 
-    if (name !== '' && login !== '' && password !== '' && type !== '') {
+    if (code !== '' && code !== '' && description !== '' && price !== '' && amount !== '') {
       const response = await api.put('/api/users', data);
 
       if (response.status === 200) {
-        window.location.href = '/'
+        window.location.href = '/admin/products/'
       } else {
         alert('Erro de atualização de usuário!');
       }
@@ -68,7 +66,7 @@ export default function UserRegister() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <MenuAdmin title={'USUÁRIOS'} />
+        <MenuAdmin title={'PRODUTOS'} />
         <Box
           component="main"
           sx={{
@@ -82,67 +80,77 @@ export default function UserRegister() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
             <Grid container spacing={3}>
               <Grid item sm={12}>
                 <Paper sx={{ p: 2 }}>
                   <h2>Atualização de Usuários</h2>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
+                    <TextField
+                          required
+                          id="code"
+                          name="code"
+                          label="Código"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          value={code}
+                          onChange={e => setCode (e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          id="name"
+                          name="name"
+                          label="Nome"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          value={name}
+                          onChange={e => setName (e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={3}>
                       <TextField
-                        required
-                        id="name"
-                        name="name"
-                        label="Nome Completo"
-                        fullWidth
-                        autoComplete="none"
-                        variant="standard"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        id="login"
-                        name="login"
-                        label="Login Usuário"
-                        fullWidth
-                        autoComplete="none"
-                        variant="standard"
-                        value={login}
-                        onChange={e => setLogin(e.target.value)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <FormControl fullWidth>
-                        <InputLabel id="label-type">Tipo Usuário</InputLabel>
-                        <Select
-                          labelId="label-type"
-                          id="type"
-                          label="type"
-                          value={type}
-                          onChange={e => setType(e.target.value)}
-                        >
-                          <MenuItem value={1}>Administrador</MenuItem>
-                          <MenuItem value={2}>Usuário Padrão</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        type="password"
-                        required
-                        id="password"
-                        name="password"
-                        label="Senha"
-                        fullWidth
-                        autoComplete="senha"
-                        variant="standard"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                      />
-                    </Grid>
+                          required
+                          id="description"
+                          name="description"
+                          label="Descrição"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          value={description}
+                          onChange={e => setDescription (e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={3}>
+                        <TextField
+                          required
+                          id="price"
+                          name="price"
+                          label="Preço"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          value={price}
+                          onChange={e => setPrice (e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={3}>
+                        <TextField
+                          required
+                          id="amount"
+                          name="amount"
+                          label="Quantidade"
+                          fullWidth
+                          autoComplete="none"
+                          variant="standard"
+                          value={amount}
+                          onChange={e => setAmount (e.target.value)}
+                        />
+                      </Grid>
                     <Grid item xs={12} sm={12}>
                       <Button onClick={handleSubmit} variant="contained">Salvar</Button>
                     </Grid>
