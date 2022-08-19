@@ -21,6 +21,8 @@ import Users from './pages/admin/users';
 import UsersEdit from './pages/admin/users/users.edit';
 import UsersRegister from './pages/admin/users/users.register';
 import Login from './pages/client/login';
+import LowStock from './pages/admin/stock/low-stock'
+
 
 //IMPORT CLIENT
 import ProductDetails from './pages/client/products/product.details';
@@ -55,7 +57,8 @@ export default function Rotas() {
                 <Route path="/admin/subgroups" element={<PrivateRoute> <Subgroups /> </PrivateRoute>} />
                 <Route path="/admin/subgroups/register" element={<PrivateRoute> <SubgroupsRegister /> </PrivateRoute>} />
                 <Route path="/admin/subgroups/edit/:idSubgroup" element={<PrivateRoute> <SubgroupsEdit /> </PrivateRoute>} />
-
+                
+                <Route path="/admin/low-stock" element={<PrivateRoute> <LowStock /> </PrivateRoute>} />
 
             </Routes>
         </BrowserRouter>
