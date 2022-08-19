@@ -25,6 +25,8 @@ routes.get('/api/users/destroyToken',User.destroyToken);
 
 //rotas de Produtos
 routes.post('/api/products',Product.create);
+routes.post('/api/products/search',Product.search);//rota da pesquisa, teste
+routes.get('/api/products/search',Product.search);
 routes.get('/api/products',Product.index);
 routes.get('/api/products.details/:_id', Product.details);
 routes.delete('/api/products/:_id', Product.delete);

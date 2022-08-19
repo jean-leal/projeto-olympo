@@ -178,8 +178,8 @@ export default function ManuAdmin({ title }) {
           </ListItemButton>
           <Collapse in={openListALmox}>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} href={''}>
-                <ListItemText primary="Requisição"  />
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/low-stock'}>
+                <ListItemText primary="Baixa de Estoque"  />
               </ListItemButton>
             </List>
           </Collapse>
