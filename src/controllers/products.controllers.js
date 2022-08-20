@@ -8,7 +8,7 @@ module.exports = {
     async search(req, res) {
         const { search } = req.body;
         const productSearch = await Product.findOne({product_name:search});
-        res.json(productSearch)       
+        res.json(productSearch);    
     },
     async create(req, res){
         const {product_code, product_name, product_description, product_price, product_amount} = req.body;

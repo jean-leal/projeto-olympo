@@ -17,7 +17,7 @@ module.exports = {
             return res.status(200).json(group);
         }else{
             return res.status(500).json({msg:"falha de cadastro"});
-        }ola
+        }
         
     },
     async details(req, res){

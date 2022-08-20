@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -27,34 +27,23 @@ const mdTheme = createTheme();
 
 export default function LowStock() {
     const [search, setSearch] = useState('');
+    const [code, setCode] = useState('');
+    const [name, setName] = useState('');
 
     async function handleSubmit() {
         await api.post('/api/products/search', { search }).then(res => {
-            setSearch(res.data)
-
+            setCode(res.data.product_code);
+            setName(res.data.product_name);
         })
     }
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-
-        async function loadProduct() {
-            const response = await api.get('/api/products');
-            setProducts(response.data);
-        }
-        loadProduct();
-    }, [])
 
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
-
-
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -121,12 +110,10 @@ export default function LowStock() {
                                                                     </TableRow>
                                                                 </TableHead>
                                                                 <TableBody>
-                                                                    {products.map((row) => (
-                                                                        <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                                                            <TableCell component="th" scope="row">{row.product_code}</TableCell>
-                                                                            <TableCell component="th" scope="row">{row.product_name}</TableCell>
-                                                                        </TableRow>
-                                                                    ))}
+                                                                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                                                        <TableCell component="th">{code}</TableCell>
+                                                                        <TableCell component="th">{name}</TableCell>
+                                                                    </TableRow>
                                                                 </TableBody>
                                                             </Table>
                                                         </TableContainer>
