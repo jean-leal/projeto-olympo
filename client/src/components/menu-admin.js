@@ -149,7 +149,7 @@ export default function ManuAdmin({ title }) {
               </ListItemButton>
             </List>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/providers'}>
                 <ListItemText primary="Fornecedores" />
               </ListItemButton>
             </List>

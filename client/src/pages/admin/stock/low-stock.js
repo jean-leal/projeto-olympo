@@ -261,6 +261,10 @@ export default function LowStock() {
                                 size="small"
                               />
                             </Grid>
+                            <Grid item xs={12} sm={2} align="right"></Grid>
+                            <Grid item xs={12} sm={2} align="lefth">
+                              <Button variant="contained">Inserir Item</Button>
+                            </Grid>
                           </Grid>
                         </Box>
                       </TabPanel>
@@ -270,7 +274,7 @@ export default function LowStock() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Código</TableCell>
-                                <TableCell>Nome</TableCell>
+                                <TableCell>Descrição</TableCell>
                                 <TableCell>Unidade</TableCell>
                                 <TableCell>Quantidade</TableCell>
                                 <TableCell>Valor Unitário</TableCell>
@@ -298,10 +302,14 @@ export default function LowStock() {
                         </TableContainer>
                       </TabPanel>
                     </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <Button variant="contained">Salvar</Button>
-                      <Button variant="contained" color="error">Cancelar</Button>
-                    </Grid>
+                      <Grid item xs={12} sm={7}></Grid>
+                      <Grid item xs={12} sm={3} align="right">
+                        <Button variant="contained">Salvar Documento</Button>
+                      </Grid>
+                      <Grid item xs={12} sm={1}>
+                        <Button variant="contained" color="error">Cancelar</Button>
+                      </Grid>
+                    
                   </Grid>
                 </Paper>
               </Grid>
