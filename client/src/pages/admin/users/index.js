@@ -95,8 +95,8 @@ export default function ListUsers() {
                                 <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                                 <TableCell align="center">
                                   <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                    <Button color="primary" href={'/admin/users/edit/' + row._id}>Editar</Button>
-                                    <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
+                                    <Button color="primary" href={'/admin/users/edit/' + row._id}size="small">Editar</Button>
+                                    <Button color="secondary" onClick={() => handleDelete(row._id)}size="small">Excluir</Button>
                                   </ButtonGroup>
                                 </TableCell>
                               </TableRow>

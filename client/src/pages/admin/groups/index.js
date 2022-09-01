@@ -80,7 +80,7 @@ export default function ListGroups() {
               <Paper sx={{ p: 2 }}>
                 <h2>Listagem de Grupos</h2>
                 <TableContainer sx={{ maxHeight: 440 }}>
-                  <Table stickyHeader aria-label="sticky table">
+                  <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow>
                       <TableCell>Código</TableCell>
@@ -95,8 +95,8 @@ export default function ListGroups() {
                               <TableCell component="th" scope="row">{row.group_name}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/groups/edit/'+row._id}>Editar</Button>
-                                  <Button color="error" onClick={()=> handleDelete(row._id)}>Excluir</Button>
+                                  <Button color="primary" href={'/admin/groups/edit/'+row._id} size="small">Editar</Button>
+                                  <Button color="error" onClick={()=> handleDelete(row._id)} size="small">Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>
                               

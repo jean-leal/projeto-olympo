@@ -73,7 +73,7 @@ export default function ProductsRegister() {
                           label="Código"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={code}
                           onChange={e => setCode (e.target.value)}
                         />
@@ -86,7 +86,7 @@ export default function ProductsRegister() {
                           label="Unidade"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           
                         />
                       </Grid>
@@ -98,7 +98,7 @@ export default function ProductsRegister() {
                           label="Status"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           
                         />
                       </Grid>
@@ -110,7 +110,7 @@ export default function ProductsRegister() {
                           label="Nome"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={name}
                           onChange={e => setName (e.target.value)}
                         />
@@ -124,7 +124,7 @@ export default function ProductsRegister() {
                           label="Grupo"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           
                         />
                       </Grid>
@@ -136,7 +136,7 @@ export default function ProductsRegister() {
                           label="Subgrupo"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           
                         />
                       </Grid>
@@ -148,7 +148,7 @@ export default function ProductsRegister() {
                           label="Preço"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={price}
                           onChange={e => setPrice (e.target.value)}
                         />
@@ -161,7 +161,7 @@ export default function ProductsRegister() {
                           label="Quantidade Estoque"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={amount}
                           onChange={e => setAmount (e.target.value)}
                         />

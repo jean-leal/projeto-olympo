@@ -68,7 +68,7 @@ export default function ListProducts() {
               <Paper sx={{ p: 2 }}>
                 <h2>Produtos</h2>
                 <TableContainer sx={{ maxHeight: 440 }}>
-                  <Table stickyHeader aria-label="sticky table">
+                  <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow>
                       <TableCell>Código</TableCell>
@@ -97,7 +97,7 @@ export default function ListProducts() {
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/products/edit/'+row._id}>Editar</Button>
+                                  <Button color="primary" href={'/admin/products/edit/'+row._id}size="small">Editar</Button>
                                 </ButtonGroup>
                               </TableCell>
                         </TableRow>

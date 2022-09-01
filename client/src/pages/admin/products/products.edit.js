@@ -94,7 +94,7 @@ export default function UserRegister() {
                           label="Código"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={code}
                           onChange={e => setCode (e.target.value)}
                         />
@@ -107,7 +107,7 @@ export default function UserRegister() {
                           label="Nome"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={name}
                           onChange={e => setName (e.target.value)}
                         />
@@ -120,7 +120,7 @@ export default function UserRegister() {
                           label="Descrição"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={description}
                           onChange={e => setDescription (e.target.value)}
                         />
@@ -133,7 +133,7 @@ export default function UserRegister() {
                           label="Preço"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={price}
                           onChange={e => setPrice (e.target.value)}
                         />
@@ -146,7 +146,7 @@ export default function UserRegister() {
                           label="Quantidade"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={amount}
                           onChange={e => setAmount (e.target.value)}
                         />

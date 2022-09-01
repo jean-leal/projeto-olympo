@@ -75,7 +75,7 @@ export default function UserRegister() {
                           label="Nome Completo"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={name}
                           onChange={e => setName (e.target.value)}
                         />
@@ -88,13 +88,13 @@ export default function UserRegister() {
                           label="Login Usuário"
                           fullWidth
                           autoComplete="none"
-                          variant="standard"
+                          size="small"
                           value={login}
                           onChange={e => setLogin (e.target.value)}
                         />
                       </Grid>
                       <Grid item xs={12} sm={3}>
-                      <FormControl fullWidth>
+                      <FormControl fullWidth size="small">
                         <InputLabel id="label-type">Tipo Usuário</InputLabel>
                         <Select
                           labelId="label-type"
@@ -117,7 +117,7 @@ export default function UserRegister() {
                           label="Senha"
                           fullWidth
                           autoComplete="senha"
-                          variant="standard"
+                          size="small"
                           value={password}
                           onChange={e => setPassword (e.target.value)}
                         />

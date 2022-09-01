@@ -85,7 +85,7 @@ export default function SubgroupRegister() {
                         label="Código"
                         fullWidth
                         autoComplete="none"
-                        variant="standard"
+                        size="small"
                         value={code}
                         onChange={e => setCode(e.target.value)}
                       />
@@ -98,7 +98,7 @@ export default function SubgroupRegister() {
                         label="Nome"
                         fullWidth
                         autoComplete="none"
-                        variant="standard"
+                        size="small"
                         value={name}
                         onChange={e => setName(e.target.value)}
                       />
