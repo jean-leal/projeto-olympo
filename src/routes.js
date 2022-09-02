@@ -6,6 +6,7 @@ const User = require ('./controllers/users.controllers');
 const Product = require('./controllers/products.controllers');
 const Group = require('./controllers/groups.controllers');
 const Subgroup = require('./controllers/subgroups.controllers');
+const Providers = require('./controllers/providers.controllers');
 
 
 routes.get('/',User.index);
@@ -39,11 +40,19 @@ routes.get('/api/groups.details/:_id', Group.details);
 routes.delete('/api/groups/:_id', Group.delete);
 routes.put('/api/groups', Group.update);
 
-//rotas de Grupos
+//rotas de Subgrupos
 routes.post('/api/subgroups',Subgroup.create);
 routes.get('/api/subgroups',Subgroup.index);
 routes.get('/api/subgroups.details/:_id', Subgroup.details);
 routes.delete('/api/subgroups/:_id', Subgroup.delete);
 routes.put('/api/subgroups', Subgroup.update);
+
+//rotas de Fornecedores 
+routes.post('/api/providers',Providers.create);
+routes.get('/api/providers',Providers.index);
+routes.put('/api/providers', Providers.update);
+routes.get('/api/providers.details/:_id', Providers.details);
+//routes.delete('/api/subgroups/:_id', Subgroup.delete);
+
 
 module.exports = routes;

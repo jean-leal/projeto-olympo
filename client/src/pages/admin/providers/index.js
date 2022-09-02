@@ -16,19 +16,20 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Chip from '@mui/material/Chip';
 import api from '../../../services/api';
 
 const mdTheme = createTheme();
 
-export default function ListProducts() {
+export default function ListProviders() {
 
-  const [products, setProducts] = useState([]);
+  const [providers, setProviders] = useState([]);
   useEffect(()=>{
-    async function loadProduct(){
-      const response = await api.get('/api/products');
-      setProducts(response.data);
+    async function loadProviders(){
+      const response = await api.get('/api/providers');
+      setProviders(response.data);
     }
-    loadProduct();
+    loadProviders();
   }, [])
 
   const [page, setPage] = React.useState(0);
@@ -67,7 +68,7 @@ export default function ListProducts() {
               <Grid item sm={12}>              
               <Paper sx={{ p: 2 }}>
                 <h2>Fornecedores</h2>
-                <TableContainer sx={{ maxHeight: 440 }}>
+                <TableContainer>
                   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow>
@@ -75,7 +76,7 @@ export default function ListProducts() {
                       <TableCell>CNPJ</TableCell>
                       <TableCell align="center">Razão Social</TableCell>
                       <TableCell align="center">Fantasia</TableCell>
-                      <TableCell align="center">Tipo de Cadastro</TableCell>
+                      <TableCell align="center">Status</TableCell>
                       <TableCell align="center">Cidade</TableCell>
                       <TableCell align="center">UF</TableCell>                      
                       <TableCell align="center">Data de Cadastro</TableCell>  
@@ -83,19 +84,21 @@ export default function ListProducts() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                      {products.map((row) => (
+                      {providers.map((row) => (
                         <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                              <TableCell component="th" scope="row">{row.product_code}</TableCell>
-                              <TableCell component="th" scope="row">{row.product_name}</TableCell>
-                              <TableCell align="center">---</TableCell>
-                              <TableCell align="center">---</TableCell>
-                              <TableCell align="center">{row.product_amount}</TableCell>
-                              <TableCell align="center">{row.product_price}</TableCell>
-                              <TableCell align="center">---</TableCell>
+                              <TableCell component="th" scope="row">{row.provider_code}</TableCell>
+                              <TableCell align="center">{row.provider_cnpj}</TableCell>
+                              <TableCell align="center">{row.provider_name}</TableCell>
+                              <TableCell align="center">{row.provider_fantasyName}</TableCell>
+                              <TableCell align="center">{row.provider_status === 1 ?
+                                  <Chip label="Ativo" color="success" /> :
+                                  <Chip label="Inativo" color="error" />}</TableCell>
+                              <TableCell align="center">{row.provider_city}</TableCell>
+                              <TableCell align="center">{row.provider_state}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/products/edit/'+row._id}size="small">Editar</Button>
+                                  <Button color="primary" href={'/admin/providers/edit/'+row._id}size="small">Editar</Button>
                                 </ButtonGroup>
                               </TableCell>
                         </TableRow>
@@ -106,7 +109,7 @@ export default function ListProducts() {
                 <TablePagination
                   rowsPerPageOptions={[10, 25, 100]}
                   component="div"
-                  count={products.length}
+                  count={providers.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}

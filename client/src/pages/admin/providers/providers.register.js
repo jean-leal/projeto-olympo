@@ -17,15 +17,17 @@ import api from "../../../services/api";
 
 const mdTheme = createTheme();
 
-export default function ProductsRegister() {
+export default function ProvidersRegister() {
   const [code, setCode] = useState("");
+  const [status, setStatus] = useState("");
+  const [fantasyName, setFantasyName] = useState("");
   const [name, setName] = useState("");
   const [cnpj, setCNPJ] = useState("");
   const [ie, setIE] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [cep, setCEP] = useState("");
-  const [road, setRoad] = useState("");
+  const [address, setAddress] = useState("");
   const [number, setNumber] = useState("");
   const [district, setDistrict] = useState("");
   const [phoneContact, setPhoneContact] = useState("");
@@ -35,24 +37,27 @@ export default function ProductsRegister() {
   async function handleSubmit() {
     const data = {
       provider_code: code,
+      provider_status: status,
       provider_name: name,
+      provider_fantasyName: fantasyName,
       provider_cnpj: cnpj,
       provider_ie: ie,
       provider_city: city,
       provider_state: state,
       provider_cep: cep,
-      provider_road: road,
+      provider_address: address,
       provider_number: number,
       provider_district: district,
       provider_phoneContact: phoneContact,
       provider_emailContact: emailContact,
       provider_contact: contact,
     };
-    if (code !== "" && name !== "") {
-      const response = await api.post("/api/products", data);
+    console.log(data)
+    if (code !== "" && name !== "" && cnpj !== "" && ie !== "" && phoneContact !== "") {
+      const response = await api.post("/api/providers", data);
 
       if (response.status === 200) {
-        window.location.href = "/admin/products";
+        window.location.href = "/admin/providers";
       } else {
         alert("erro de cadastro de Forncedor");
       }
@@ -60,11 +65,6 @@ export default function ProductsRegister() {
       alert("Preencha todos os dados!");
     }
   }
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -106,36 +106,39 @@ export default function ProductsRegister() {
                     <Grid item xs={12} sm={4}>
                       <TextField
                         required
-                        id="unity"
-                        name="unity"
+                        id="cnpj"
+                        name="cnpj"
                         label="CNPJ"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={cnpj}
+                        onChange={(e) => setCNPJ(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="ie"
+                        name="ie"
                         label="Inscrição Estadual"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={ie}
+                        onChange={(e) => setIE(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <FormControl fullWidth size="small">
-                        <InputLabel id="demo-select-small" required>
+                        <InputLabel id="status" required>
                           Status
                         </InputLabel>
                         <Select
-                          labelId="demo-select-small"
-                          id="demo-select-small"
-                          value={age}
-                          label="Age"
-                          onChange={handleChange}
+                          labelId="status"
+                          id="status"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
                         >
                           <MenuItem value={1}>Ativo</MenuItem>
                           <MenuItem value={2}>Inativo</MenuItem>
@@ -145,12 +148,14 @@ export default function ProductsRegister() {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        id="name"
-                        name="name"
+                        id="fantasyName"
+                        name="fantasyName"
                         label="Nome Fantasia"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={fantasyName}
+                        onChange={(e) => setFantasyName(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -162,105 +167,125 @@ export default function ProductsRegister() {
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="address"
+                        name="address"
                         label="Endereço"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="number"
+                        name="number"
                         label="Número"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="district"
+                        name="district"
                         label="Bairro"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
                         required
-                        id="group"
-                        name="group"
+                        id="city"
+                        name="city"
                         label="Cidade"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
                         required
-                        id="subgroup"
-                        name="subgroup"
+                        id="state"
+                        name="state"
                         label="Estado"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
                         required
-                        id="price"
-                        name="price"
+                        id="cep"
+                        name="cep"
                         label="CEP"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={cep}
+                        onChange={(e) => setCEP (e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="phoneContact"
+                        name="phoneContact"
                         label="Telefone Contato"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={phoneContact}
+                        onChange={(e) => setPhoneContact(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="emailContact"
+                        name="emailContact"
                         label="E-mail Contato"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={emailContact}
+                        onChange={(e) => setEmailContact(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         required
-                        id="amount"
-                        name="amount"
+                        id="contact"
+                        name="contact"
                         label="Contato"
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={contact}
+                        onChange={(e) => setContact(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} display="flex">

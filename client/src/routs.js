@@ -60,7 +60,7 @@ export default function Rotas() {
 
                 <Route path="/admin/providers" element={<PrivateRoute> <Providers /> </PrivateRoute>} />
                 <Route path="/admin/providers/register" element={<PrivateRoute> <ProvidersRegister /> </PrivateRoute>} />
-                <Route path="/admin/providers/edit/:idSubgroup" element={<PrivateRoute> <ProvidersEdit /> </PrivateRoute>} />
+                <Route path="/admin/providers/edit/:idProvider" element={<PrivateRoute> <ProvidersEdit /> </PrivateRoute>} />
                 
                 <Route path="/admin/subgroups" element={<PrivateRoute> <Subgroups /> </PrivateRoute>} />
                 <Route path="/admin/subgroups/register" element={<PrivateRoute> <SubgroupsRegister /> </PrivateRoute>} />
