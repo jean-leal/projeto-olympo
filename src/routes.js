@@ -7,6 +7,7 @@ const Product = require('./controllers/products.controllers');
 const Group = require('./controllers/groups.controllers');
 const Subgroup = require('./controllers/subgroups.controllers');
 const Providers = require('./controllers/providers.controllers');
+const Sector = require('./controllers/sectors.controllers');
 
 
 routes.get('/',User.index);
@@ -27,7 +28,6 @@ routes.get('/api/users/destroyToken',User.destroyToken);
 //rotas de Produtos
 routes.post('/api/products',Product.create);
 routes.post('/api/products/search',Product.search);//rota da pesquisa, teste
-routes.get('/api/products/search',Product.search);
 routes.get('/api/products',Product.index);
 routes.get('/api/products.details/:_id', Product.details);
 routes.delete('/api/products/:_id', Product.delete);
@@ -54,5 +54,13 @@ routes.put('/api/providers', Providers.update);
 routes.get('/api/providers.details/:_id', Providers.details);
 //routes.delete('/api/subgroups/:_id', Subgroup.delete);
 
+//rotas de Setores
+routes.post('/api/sectors',Sector.create);
+routes.get('/api/sectors',Sector.index);
+routes.get('/api/sectors.details/:_id', Sector.details);
+routes.delete('/api/sectors/:_id', Sector.delete);
+routes.put('/api/sectors', Sector.update);
+routes.post('/api/sectors/search',Sector.search);//rota da pesquisa, teste
+routes.get('/api/sectors/search',Sector.search);
 
 module.exports = routes;

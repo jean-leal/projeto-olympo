@@ -73,9 +73,9 @@ export default function LowStock() {
   };
 
   async function handleSubmit() {
-    await api.post("/api/products/search", { search }).then((res) => {
-      setCode(res.data.product_code);
-      setName(res.data.product_name);
+    await api.post("/api/sectors/search", { search }).then((res) => {
+      setCode(res.data.sector_code);
+      setName(res.data.sector_name);
     });
   }
 
