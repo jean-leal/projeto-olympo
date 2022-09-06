@@ -65,6 +65,7 @@ export default function LowStock() {
   const [search, setSearch] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
+  const [reqSector, setReqSector] = useState("");
 
   const [value, setValue] = React.useState(0);
 
@@ -74,10 +75,13 @@ export default function LowStock() {
 
   async function handleSubmit() {
     await api.post("/api/sectors/search", { search }).then((res) => {
-      setCode(res.data.sector_code);
-      setName(res.data.sector_name);
+      setReqSector(res.data);
+      
+    }).catch((err)=>{
+      alert('Setor não encontrado')
     });
   }
+  console.log(reqSector._id)
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -178,8 +182,8 @@ export default function LowStock() {
                                       },
                                     }}
                                   >
-                                    <TableCell component="th">{code}</TableCell>
-                                    <TableCell component="th">{name}</TableCell>
+                                    <TableCell component="th">{reqSector.sector_code}</TableCell>
+                                    <TableCell component="th">{reqSector.sector_name}</TableCell>
                                   </TableRow>
                                 </TableBody>
                               </Table>

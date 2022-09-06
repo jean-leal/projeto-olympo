@@ -35,9 +35,10 @@ module.exports = {
         const data = {sector_code, sector_name};
         const sector = await Sector.findOneAndUpdate({_id}, data, {new:true});
         res.json(sector);
-    },async search(req, res) {
-      const { search } = req.body;
-      const sectorSearch = await Sector.findOne({sector_name:search});
-      res.json(sectorSearch);    
+    },
+    async search(req, res) {
+      const sector_name = RegExp(req.body.search, 'i');
+      const sectortSearch = await Sector.findOne({sector_name});
+      res.json(sectortSearch);    
   }
 }
