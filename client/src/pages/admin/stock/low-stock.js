@@ -65,6 +65,7 @@ export default function LowStock() {
   const [search, setSearch] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
+  const [sectorCode, setSectorCode] = useState("");
 
   const [value, setValue] = React.useState(0);
 
@@ -186,7 +187,8 @@ export default function LowStock() {
                             </TableContainer>
                           </DialogContent>
                           <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button onClick={''}>Inserir</Button>
+                            <Button onClick={handleClose}>Cancelar</Button>
                           </DialogActions>
                         </Dialog>
                       </>
