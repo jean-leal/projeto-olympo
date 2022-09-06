@@ -97,9 +97,7 @@ export default function UserRegister() {
                       <FormControl fullWidth size="small">
                         <InputLabel id="label-type">Tipo Usuário</InputLabel>
                         <Select
-                          labelId="label-type"
-                          id="type"
-                          label="type"
+                          label="TipoUsuario"
                           value={type}
                           onChange={e => setType (e.target.value)}
                         >

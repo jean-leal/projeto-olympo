@@ -1,183 +1,232 @@
-import React,{useState} from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
-import MenuAdmin from '../../../components/menu-admin';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import api from '../../../services/api';
+import React, { useState, useEffect} from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import MenuAdmin from "../../../components/menu-admin";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import api from "../../../services/api";
 
 const mdTheme = createTheme();
 
 export default function ProductsRegister() {
-  const [code, setCode] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [amount, setAmount] = useState('');
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [unit, SetUnit] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [groupId, setGroupId] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [subgroupName, setSubgroupName] = useState("");
+  const [subgroupId, setSubgroupId] = useState("");
 
-  async function handleSubmit(){
+  const [groups, setGroups] = useState([]);
+  useEffect(()=>{
+    async function loadGroups(){
+      const response = await api.get('/api/groups');
+      setGroups(response.data);
+    }
+    loadGroups();
+  }, [])
+
+  async function handleSubmit() {
     const data = {
-      product_code:code,
-      product_name : name,
-      product_description : description,
-      product_price : price,
-      product_amount : amount}
-    
-      if(code!=='' && name!=='' && description!=='' && price!=='' && amount!==''){
-        const response = await api.post('/api/products', data);
-      
-      if (response.status === 200){
-        window.location.href='/admin/products'
-      }else{
-        alert('erro de cadastro de produto');
-      } }else{
-        alert('Preencha todos os dados!');
+      product_code: code,
+      product_unit: unit,
+      product_name: name,
+      product_group: {
+        _id: groupId,
+        group_name: groupName,
+      },
+      product_subgroup: {
+        _id: subgroupId,
+        subgroup_name: subgroupName,
+      },
+      product_price: price,
+      product_quantity: quantity,
+    };
+
+    if (
+      code !== "" &&
+      name !== "" &&
+      unit !== "" &&
+      price !== "" &&
+      quantity !== ""
+    ) {
+      const response = await api.post("/api/products", data);
+
+      if (response.status === 200) {
+        window.location.href = "/admin/products";
+      } else {
+        alert("erro de cadastro de produto");
       }
-      
+    } else {
+      alert("Preencha todos os dados!");
+    }
   }
-   
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline /> 
-        <MenuAdmin title = {'PRODUTOS'} />
-          <Box
-            component="main"
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light'
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: '100vh',
-              overflow: 'auto',
-            }}
-          >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
-              <Grid container spacing={3}>    
-                <Grid item sm={12}>
-                  <Paper sx={{ p: 2 }}>
-                    <h2>Cadastro de Produto</h2>
-                    <Grid container spacing={3}> 
-                      <Grid item xs={12} sm={4}>
-                        <TextField
-                          required
-                          id="code"
-                          name="code"
-                          label="Código"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          value={code}
-                          onChange={e => setCode (e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <MenuAdmin title={"PRODUTOS"} />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+            <Grid container spacing={3}>
+              <Grid item sm={12}>
+                <Paper sx={{ p: 2 }}>
+                  <h2>Cadastro de Produto</h2>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={4}>
                       <TextField
-                          required
-                          id="unity"
-                          name="unity"
-                          label="Unidade"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                      <TextField
-                          required
-                          id="status"
-                          name="status"
-                          label="Status"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={12}>
-                        <TextField
-                          required
-                          id="name"
-                          name="name"
-                          label="Nome"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          value={name}
-                          onChange={e => setName (e.target.value)}
-                        />
-                      </Grid>
-                      
-                      <Grid item xs={12} sm={3}>
-                      <TextField
-                          required
-                          id="group"
-                          name="group"
-                          label="Grupo"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                      <TextField
-                          required
-                          id="subgroup"
-                          name="subgroup"
-                          label="Subgrupo"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <TextField
-                          required
-                          id="price"
-                          name="price"
-                          label="Preço"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          value={price}
-                          onChange={e => setPrice (e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <TextField
-                          required
-                          id="amount"
-                          name="amount"
-                          label="Quantidade Estoque"
-                          fullWidth
-                          autoComplete="none"
-                          size="small"
-                          value={amount}
-                          onChange={e => setAmount (e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={12}>                        
-                          <Button onClick={handleSubmit} variant="contained">Salvar</Button>                             
-                          <Button variant="contained" color = "error" href="/admin/products">Cancelar</Button>                       
-                      </Grid>
+                        required
+                        id="code"
+                        name="code"
+                        label="Código"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                      />
                     </Grid>
-                  </Paper>
-                </Grid>     
-                 
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        required
+                        id="unity"
+                        name="unity"
+                        label="Unidade"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        required
+                        id="status"
+                        name="status"
+                        label="Status"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="name"
+                        name="name"
+                        label="Nome"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label" size="small" >
+                          Grupo
+                        </InputLabel>
+                        <Select
+                          name= "select_group"
+                          size="small" 
+                          value={age}
+                          label="Grupo"
+                          onChange={handleChange}
+                        >
+                          {groups.map(group =>{
+                            return (
+                              <MenuItem key = {group.group_code} value={group.group_code}>{group.group_code+' - '+group.group_name}</MenuItem>
+                            )
+                          })}
+                          
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        required
+                        id="subgroup"
+                        name="subgroup"
+                        label="Subgrupo"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        required
+                        id="price"
+                        name="price"
+                        label="Preço"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        required
+                        id="amount"
+                        name="amount"
+                        label="Quantidade Estoque"
+                        fullWidth
+                        autoComplete="none"
+                        size="small"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <Button onClick={handleSubmit} variant="contained">
+                        Salvar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        href="/admin/products"
+                      >
+                        Cancelar
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </Grid>
-            </Container>
-          </Box>
+            </Grid>
+          </Container>
         </Box>
+      </Box>
     </ThemeProvider>
   );
 }

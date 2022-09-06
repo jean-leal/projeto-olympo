@@ -37,7 +37,7 @@ module.exports = {
         res.json(sector);
     },
     async search(req, res) {
-      const sector_name = RegExp(req.body.search, 'i');
+      const sector_name = RegExp(req.body.searchSector, 'i');
       const sectortSearch = await Sector.findOne({sector_name});
       res.json(sectortSearch);    
   }

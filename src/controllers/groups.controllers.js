@@ -9,10 +9,8 @@ module.exports = {
         const {group_code, group_name} = req.body;
         let data = {};
         let group = await Group.findOne({group_code});
-
         if(!group){
             data = {group_code, group_name};
-
             group = await Group.create(data);
             return res.status(200).json(group);
         }else{

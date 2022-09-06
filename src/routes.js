@@ -27,7 +27,8 @@ routes.get('/api/users/destroyToken',User.destroyToken);
 
 //rotas de Produtos
 routes.post('/api/products',Product.create);
-routes.post('/api/products/search',Product.search);//rota da pesquisa, teste
+routes.post('/api/products/search',Product.search);//rota para pesquisa
+routes.get('/api/products/search',Product.search);
 routes.get('/api/products',Product.index);
 routes.get('/api/products.details/:_id', Product.details);
 routes.delete('/api/products/:_id', Product.delete);
@@ -60,7 +61,7 @@ routes.get('/api/sectors',Sector.index);
 routes.get('/api/sectors.details/:_id', Sector.details);
 routes.delete('/api/sectors/:_id', Sector.delete);
 routes.put('/api/sectors', Sector.update);
-routes.post('/api/sectors/search',Sector.search);//rota da pesquisa, teste
+routes.post('/api/sectors/search',Sector.search);//rota para pesquisa
 routes.get('/api/sectors/search',Sector.search);
 
 module.exports = routes;

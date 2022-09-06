@@ -62,38 +62,99 @@ function a11yProps(index) {
 }
 
 export default function LowStock() {
-  const [search, setSearch] = useState("");
-  const [code, setCode] = useState("");
-  const [name, setName] = useState("");
-<<<<<<< HEAD
+  const [open, setOpen] = useState(false);
+  const [openProduct, setOpenProduct] = useState(false);
+  const [value, setValue] = useState(0);
+  const [searchSector, setSearchSector] = useState("");
+  const [searchProduct, setSearchProduct] = useState("");
+  const [reqSector, setReqSector] = useState([]);
+  const [reqProduct, setReqProduct] = useState([]);
   const [sectorCode, setSectorCode] = useState("");
-=======
-  const [reqSector, setReqSector] = useState("");
->>>>>>> 0982de026802678ee8bda09280f0fd14634834e8
+  const [sectorName, setSectorName] = useState("");
+  const [sectorId, setSectorId] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productId, setProductId] = useState("");
+  const [productUnidade, setProductUnidade] = useState("");
+  const [productPrice, setProductPrice] = useState("");
 
-  const [value, setValue] = React.useState(0);
+
+  const clearState = () => {
+    setReqSector("");
+    setSearchSector("");
+    setSearchProduct("");
+    setReqProduct("");
+  };
+  const data = {
+    sectorLowStock: {
+      _id: sectorId,
+      sector_code: sectorCode,
+      sector_name: sectorName,
+    },
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  async function handleSubmit() {
-    await api.post("/api/sectors/search", { search }).then((res) => {
-      setReqSector(res.data);
-      
-    }).catch((err)=>{
-      alert('Setor não encontrado')
-    });
+  async function sectorSearch() {
+    await api
+      .post("/api/sectors/search", { searchSector })
+      .then((res) => {
+        setReqSector(res.data);
+      })
+      .catch((err) => {
+        alert("Setor não encontrado");
+      });
   }
-  console.log(reqSector._id)
 
-  const [open, setOpen] = React.useState(false);
+  async function productSearch() {
+    await api
+      .post("/api/products/search", { searchProduct })
+      .then((res) => {
+        setReqProduct(res.data);
+      })
+      .catch((err) => {
+        alert("Produto não encontrado");
+      });
+  }
+
+  async function insertSector() {
+    await setSectorCode(reqSector.sector_code);
+    await setSectorName(reqSector.sector_name);
+    await setSectorId(reqSector._id);
+    clearState();
+    handleClose();
+  }
+
+  async function insertProduct() {
+    await setProductCode(reqProduct.product_code);
+    await setProductName(reqProduct.product_name);
+    await setProductPrice(reqProduct.product_price);
+    await setProductId(reqProduct._id);
+    clearState();
+    CloseSearchProduct();
+  }
+
+  //inicio função procurar setor 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    clearState();
   };
+  //fim função dialogo de setor
+
+  //inicio função procurar produto 
+  const OpenSearchProduct = () => {
+    setOpenProduct(true);
+  };
+  const CloseSearchProduct = () => {
+    setOpenProduct(false);
+    clearState();
+  };
+  //fim função procurar produto 
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -134,11 +195,13 @@ export default function LowStock() {
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}></Grid>
+
                     <Grid item xs={12} sm={2}>
                       <TextField
                         label="Código Setor"
                         id="outlined-size-small"
                         size="small"
+                        value={sectorCode}
                       />
                     </Grid>
                     <Grid item xs={12} sm={1}>
@@ -152,22 +215,28 @@ export default function LowStock() {
                         label="Nome Cadastro"
                         id="outlined-size-small"
                         size="small"
+                        value={sectorName}
                       />
                     </Grid>
+
                     <Grid item xs={12} sm={12}>
+                      {/* CONTEUDO PESQUISAR SETOR*/}
                       <>
-                        {/* CONTEUDO PESQUISAR-*/}
-                        <Dialog open={open} onClose={handleClose}>
-                          <DialogTitle>Pesquisa</DialogTitle>
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          sx={{ minHeight: 440 }}
+                        >
+                          <DialogTitle>Pesquisa de Setor</DialogTitle>
                           <DialogContent>
                             <TextField
                               label="Nome"
                               id="searchName"
                               size="small"
-                              value={search}
-                              onChange={(e) => setSearch(e.target.value)}
+                              value={searchSector}
+                              onChange={(e) => setSearchSector(e.target.value)}
                             />
-                            <IconButton size="normal" onClick={handleSubmit}>
+                            <IconButton size="normal" onClick={sectorSearch}>
                               <SearchIcon />
                             </IconButton>
                             <TableContainer sx={{ maxHeight: 440 }}>
@@ -186,20 +255,24 @@ export default function LowStock() {
                                       },
                                     }}
                                   >
-                                    <TableCell component="th">{reqSector.sector_code}</TableCell>
-                                    <TableCell component="th">{reqSector.sector_name}</TableCell>
+                                    <TableCell component="th">
+                                      {reqSector.sector_code}
+                                    </TableCell>
+                                    <TableCell component="th">
+                                      {reqSector.sector_name}
+                                    </TableCell>
                                   </TableRow>
                                 </TableBody>
                               </Table>
                             </TableContainer>
                           </DialogContent>
                           <DialogActions>
-                            <Button onClick={''}>Inserir</Button>
+                            <Button onClick={insertSector}>Inserir</Button>
                             <Button onClick={handleClose}>Cancelar</Button>
                           </DialogActions>
                         </Dialog>
                       </>
-                      {/* FIM CONTEUDO PESQUISAR*/}
+                      {/* FIM CONTEUDO PESQUISAR SETOR*/}
                     </Grid>
                     <Grid item sm={12}>
                       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -221,13 +294,78 @@ export default function LowStock() {
                                 id="outlined-size-small"
                                 defaultValue=""
                                 size="small"
+                                value={productCode}
                               />
                             </Grid>
                             <Grid item xs={12} sm={1}>
-                              <IconButton size="normal">
+                              <IconButton size="normal" onClick={OpenSearchProduct}>
                                 <SearchIcon />
                               </IconButton>
                             </Grid>
+                            {/* CONTEUDO PESQUISAR PRODUTO*/}
+                            <>
+                              <Dialog
+                                open={openProduct}
+                                onClose={CloseSearchProduct}
+                                sx={{ minHeight: 440 }}
+                              >
+                                <DialogTitle>Pesquisa de Produto</DialogTitle>
+                                <DialogContent>
+                                  <TextField
+                                    label="Nome"
+                                    id="searchName"
+                                    size="small"
+                                    value={searchProduct}
+                                    onChange={(e) => setSearchProduct(e.target.value)}
+                                  />
+                                  <IconButton
+                                    size="normal"
+                                    onClick={productSearch}
+                                  >
+                                    <SearchIcon />
+                                  </IconButton>
+                                  <TableContainer sx={{ maxHeight: 440 }}>
+                                    <Table
+                                      stickyHeader
+                                      aria-label="sticky table"
+                                    >
+                                      <TableHead>
+                                        <TableRow>
+                                          <TableCell>Código</TableCell>
+                                          <TableCell>Nome</TableCell>
+                                        </TableRow>
+                                      </TableHead>
+                                      <TableBody>
+                                        <TableRow
+                                          sx={{
+                                            "&:last-child td, &:last-child th":
+                                              {
+                                                border: 0,
+                                              },
+                                          }}
+                                        >
+                                          <TableCell component="th">
+                                            {reqProduct.product_code}
+                                          </TableCell>
+                                          <TableCell component="th">
+                                            {reqProduct.product_name}
+                                          </TableCell>
+                                        </TableRow>
+                                      </TableBody>
+                                    </Table>
+                                  </TableContainer>
+                                </DialogContent>
+                                <DialogActions>
+                                  <Button onClick={insertProduct}>
+                                    Inserir
+                                  </Button>
+                                  <Button onClick={CloseSearchProduct}>
+                                    Cancelar
+                                  </Button>
+                                </DialogActions>
+                              </Dialog>
+                            </>
+                            {/* FIM CONTEUDO PESQUISAR PRODUTO*/}
                             <Grid item xs={12} sm={7}>
                               <TextField
                                 fullWidth
@@ -235,6 +373,7 @@ export default function LowStock() {
                                 id="outlined-size-small"
                                 defaultValue=""
                                 size="small"
+                                value={productName}
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
@@ -260,6 +399,7 @@ export default function LowStock() {
                                 id="outlined-size-small"
                                 defaultValue=""
                                 size="small"
+                                value={productPrice}
                               />
                             </Grid>
                             <Grid item xs={12} sm={5} align="right">
@@ -270,8 +410,18 @@ export default function LowStock() {
                                 size="small"
                               />
                             </Grid>
+                            <Grid item xs={12} sm={2}></Grid>
+                            <Grid item xs={12} sm={12} >
+                              <TextField 
+                                sx={{  width: 120 }}                          
+                                label="Estoque atual"
+                                id="outlined-size-small"
+                                defaultValue=""
+                                size="small"
+                              />
+                            </Grid>
                             <Grid item xs={12} sm={2} align="right"></Grid>
-                            <Grid item xs={12} sm={2} align="lefth">
+                            <Grid item xs={12} sm={12} align="lefth">
                               <Button variant="contained">Inserir Item</Button>
                             </Grid>
                           </Grid>
@@ -311,14 +461,15 @@ export default function LowStock() {
                         </TableContainer>
                       </TabPanel>
                     </Grid>
-                      <Grid item xs={12} sm={7}></Grid>
-                      <Grid item xs={12} sm={3} align="right">
-                        <Button variant="contained">Salvar Documento</Button>
-                      </Grid>
-                      <Grid item xs={12} sm={1}>
-                        <Button variant="contained" color="error">Cancelar</Button>
-                      </Grid>
-                    
+                    <Grid item xs={12} sm={7}></Grid>
+                    <Grid item xs={12} sm={3} align="right">
+                      <Button variant="contained">Salvar Documento</Button>
+                    </Grid>
+                    <Grid item xs={12} sm={1}>
+                      <Button variant="contained" color="error">
+                        Cancelar
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Paper>
               </Grid>
