@@ -74,11 +74,18 @@ export default function LowStock() {
   const [sectorId, setSectorId] = useState("");
   const [productCode, setProductCode] = useState("");
   const [productName, setProductName] = useState("");
+  const [productQuantity, setProductQuantity] = useState("");
   const [productId, setProductId] = useState("");
-  const [productUnidade, setProductUnidade] = useState("");
+  const [productUnit, setProductUnit] = useState("");
   const [productPrice, setProductPrice] = useState("");
+  const [productQtyLow, setProductQtyLow] = useState("");
 
-
+  const totalPrice = productPrice * productQtyLow
+  const totalPriceItem = (productPrice) =>{
+      const totalPrice = productPrice * productQtyLow;
+      return totalPrice
+  }
+  totalPriceItem()
   const clearState = () => {
     setReqSector("");
     setSearchSector("");
@@ -126,10 +133,12 @@ export default function LowStock() {
     clearState();
     handleClose();
   }
-
+console.log(reqProduct)
   async function insertProduct() {
     await setProductCode(reqProduct.product_code);
     await setProductName(reqProduct.product_name);
+    await setProductUnit(reqProduct.product_unit);
+    await setProductQuantity(reqProduct.product_quantity);
     await setProductPrice(reqProduct.product_price);
     await setProductId(reqProduct._id);
     clearState();
@@ -195,7 +204,6 @@ export default function LowStock() {
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}></Grid>
-
                     <Grid item xs={12} sm={2}>
                       <TextField
                         label="Código Setor"
@@ -218,7 +226,6 @@ export default function LowStock() {
                         value={sectorName}
                       />
                     </Grid>
-
                     <Grid item xs={12} sm={12}>
                       {/* CONTEUDO PESQUISAR SETOR*/}
                       <>
@@ -380,17 +387,16 @@ export default function LowStock() {
                             <Grid item xs={12} sm={1}>
                               <TextField
                                 label="Unidade"
-                                id="outlined-size-small"
-                                defaultValue=""
                                 size="small"
+                                value={productUnit}
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}>
                               <TextField
                                 label="Quantidade"
-                                id="outlined-size-small"
-                                defaultValue=""
                                 size="small"
+                                value={productQtyLow}
+                                onChange={(e) => setProductQtyLow(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -405,9 +411,8 @@ export default function LowStock() {
                             <Grid item xs={12} sm={5} align="right">
                               <TextField
                                 label="Valor Total"
-                                id="outlined-size-small"
-                                defaultValue=""
                                 size="small"
+                                value={totalPrice}
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
@@ -415,9 +420,8 @@ export default function LowStock() {
                               <TextField 
                                 sx={{  width: 120 }}                          
                                 label="Estoque atual"
-                                id="outlined-size-small"
-                                defaultValue=""
                                 size="small"
+                                value={productQuantity}
                               />
                             </Grid>
                             <Grid item xs={12} sm={2} align="right"></Grid>

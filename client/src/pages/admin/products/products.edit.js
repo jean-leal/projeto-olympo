@@ -84,7 +84,7 @@ export default function UserRegister() {
             <Grid container spacing={3}>
               <Grid item sm={12}>
                 <Paper sx={{ p: 2 }}>
-                  <h2>Atualização de Usuários</h2>
+                  <h2>Atualização de Produtos</h2>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                     <TextField

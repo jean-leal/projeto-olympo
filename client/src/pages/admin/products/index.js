@@ -43,7 +43,6 @@ export default function ListProducts() {
     setPage(0);
   };
 
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -84,16 +83,17 @@ export default function ListProducts() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
+                      
                       {products.map((row) => (
                         <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                               <TableCell component="th" scope="row">{row.product_code}</TableCell>
                               <TableCell component="th" scope="row">{row.product_name}</TableCell>
-                              <TableCell align="center">---</TableCell>
-                              <TableCell align="center">---</TableCell>
-                              <TableCell align="center">---</TableCell>
-                              <TableCell align="center">{row.product_amount}</TableCell>
+                              <TableCell align="center">{row.product_unit}</TableCell>
+                              <TableCell align="center">{row.product_group.group_code}</TableCell>
+                              <TableCell align="center">{row.product_subgroup.subgroup_code}</TableCell>
+                              <TableCell align="center">{row.product_quantity}</TableCell>
                               <TableCell align="center">{row.product_price}</TableCell>
-                              <TableCell align="center">---</TableCell>
+                              <TableCell align="center">{row.product_status}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                               <TableCell align="center">
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">

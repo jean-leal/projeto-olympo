@@ -131,11 +131,11 @@ export default function ProvidersRegister() {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <FormControl fullWidth size="small">
-                        <InputLabel id="status" required>
+                        <InputLabel id="status" label="status" required>
                           Status
                         </InputLabel>
                         <Select
-                          labelId="status"
+                          label="status"
                           id="status"
                           value={status}
                           onChange={(e) => setStatus(e.target.value)}

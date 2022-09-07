@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -20,21 +20,26 @@ const mdTheme = createTheme();
 export default function ProductsRegister() {
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
-  const [unit, SetUnit] = useState("");
+  const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [groupId, setGroupId] = useState("");
-  const [groupName, setGroupName] = useState("");
-  const [subgroupName, setSubgroupName] = useState("");
-  const [subgroupId, setSubgroupId] = useState("");
-
+  const [group, setGroup] = useState("");
+  const [subgroup, setSubgroup] = useState("");
+  const [status, setStatus] = useState("");
   const [groups, setGroups] = useState([]);
-  useEffect(()=>{
-    async function loadGroups(){
+  const [subgroups, setSubgroups] = useState([]);
+
+  useEffect(() => {
+    async function loadGroups() {
       const response = await api.get('/api/groups');
       setGroups(response.data);
     }
     loadGroups();
+    async function loadSubgroups() {
+      const response = await api.get('/api/subgroups');
+      setSubgroups(response.data);
+    }
+    loadSubgroups();
   }, [])
 
   async function handleSubmit() {
@@ -43,17 +48,20 @@ export default function ProductsRegister() {
       product_unit: unit,
       product_name: name,
       product_group: {
-        _id: groupId,
-        group_name: groupName,
+        _id: group._id,
+        group_code: group.group_code,
+        group_name: group.group_name
       },
       product_subgroup: {
-        _id: subgroupId,
-        subgroup_name: subgroupName,
+        _id: subgroup._id,
+        subgroup_code: subgroup.subgroup_code,
+        subgroup_name: subgroup.subgroup_name,
       },
       product_price: price,
       product_quantity: quantity,
-    };
-
+      product_status: status
+    }
+    
     if (
       code !== "" &&
       name !== "" &&
@@ -72,11 +80,6 @@ export default function ProductsRegister() {
       alert("Preencha todos os dados!");
     }
   }
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -124,18 +127,25 @@ export default function ProductsRegister() {
                         fullWidth
                         autoComplete="none"
                         size="small"
+                        value={unit}
+                        onChange={(e) => setUnit(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                      <TextField
-                        required
-                        id="status"
-                        name="status"
-                        label="Status"
-                        fullWidth
-                        autoComplete="none"
-                        size="small"
-                      />
+                      <FormControl fullWidth size="small">
+                        <InputLabel required id="status" label="status">
+                          Status
+                        </InputLabel>
+                        <Select
+                          label="status"
+                          id="status"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                        >
+                          <MenuItem value={1}>Ativo</MenuItem>
+                          <MenuItem value={2}>Inativo</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={12}>
                       <TextField
@@ -156,31 +166,38 @@ export default function ProductsRegister() {
                           Grupo
                         </InputLabel>
                         <Select
-                          name= "select_group"
-                          size="small" 
-                          value={age}
+                          name="select_group"
+                          size="small"
+                          value={group}
                           label="Grupo"
-                          onChange={handleChange}
+                          onChange={(e) => setGroup(e.target.value)}
                         >
-                          {groups.map(group =>{
+                          {groups.map(group => {
                             return (
-                              <MenuItem key = {group.group_code} value={group.group_code}>{group.group_code+' - '+group.group_name}</MenuItem>
+                              <MenuItem key={group.group_code} value={group}>{group.group_code + ' - ' + group.group_name}</MenuItem>
                             )
                           })}
-                          
                         </Select>
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                      <TextField
-                        required
-                        id="subgroup"
-                        name="subgroup"
-                        label="Subgrupo"
-                        fullWidth
-                        autoComplete="none"
-                        size="small"
-                      />
+                      <FormControl fullWidth>
+                        <InputLabel size="small" label="subgrupo">
+                          Subgrupo
+                        </InputLabel>
+                        <Select
+                          size="small"
+                          value={subgroup}
+                          label="subgrupo"
+                          onChange={(e) => setSubgroup(e.target.value)}
+                        >
+                          {subgroups.map(subgroup => {
+                            return (
+                              <MenuItem key={subgroup.subgroup_code} value={subgroup}>{subgroup.subgroup_code + ' - ' + subgroup.subgroup_name}</MenuItem>
+                            )
+                          })}
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
@@ -212,11 +229,7 @@ export default function ProductsRegister() {
                       <Button onClick={handleSubmit} variant="contained">
                         Salvar
                       </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        href="/admin/products"
-                      >
+                      <Button variant="contained" color="error" href="/admin/products">
                         Cancelar
                       </Button>
                     </Grid>
