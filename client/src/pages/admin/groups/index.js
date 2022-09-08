@@ -98,10 +98,8 @@ export default function ListGroups() {
                                   <Button color="primary" href={'/admin/groups/edit/'+row._id} size="small">Editar</Button>
                                   <Button color="error" onClick={()=> handleDelete(row._id)} size="small">Excluir</Button>
                                 </ButtonGroup>
-                              </TableCell>
-                              
-                        </TableRow>
-                         
+                              </TableCell>                              
+                        </TableRow>                         
                       ))}
                     </TableBody>
                   </Table>
@@ -121,7 +119,6 @@ export default function ListGroups() {
                   </ButtonGroup>
                 </Grid> 
               </Paper>
-
               </Grid>       
               </Grid>
             </Container>

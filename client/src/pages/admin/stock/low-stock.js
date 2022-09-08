@@ -79,25 +79,33 @@ export default function LowStock() {
   const [productUnit, setProductUnit] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productQtyLow, setProductQtyLow] = useState("");
+  const [listItens, setListItens] = useState("");
 
-  const totalPrice = productPrice * productQtyLow
-  const totalPriceItem = (productPrice) =>{
-      const totalPrice = productPrice * productQtyLow;
-      return totalPrice
-  }
-  totalPriceItem()
+  const totalPrice = productPrice * productQtyLow;
+
   const clearState = () => {
     setReqSector("");
     setSearchSector("");
     setSearchProduct("");
     setReqProduct("");
+    
   };
+  const clearStateSearch = () => {
+    setProductCode("")
+    setProductName("")
+    setProductQuantity("")
+    setProductId("")
+    setProductPrice("")
+    setProductQtyLow("")
+    setProductUnit("")
+  }
   const data = {
     sectorLowStock: {
       _id: sectorId,
       sector_code: sectorCode,
       sector_name: sectorName,
     },
+    list_itens: listItens
   };
 
   const handleChange = (event, newValue) => {
@@ -105,25 +113,15 @@ export default function LowStock() {
   };
 
   async function sectorSearch() {
-    await api
-      .post("/api/sectors/search", { searchSector })
-      .then((res) => {
-        setReqSector(res.data);
-      })
-      .catch((err) => {
-        alert("Setor não encontrado");
-      });
+    await api.post("/api/sectors/search", { searchSector }).then((res) => {
+      !res.data ? alert("Setor não encontrado") : setReqSector(res.data);
+    });
   }
 
   async function productSearch() {
-    await api
-      .post("/api/products/search", { searchProduct })
-      .then((res) => {
-        setReqProduct(res.data);
-      })
-      .catch((err) => {
-        alert("Produto não encontrado");
-      });
+    await api.post("/api/products/search", { searchProduct }).then((res) => {
+      !res.data ? alert("Produto não encontrado") : setReqProduct(res.data)   
+    });
   }
 
   async function insertSector() {
@@ -133,7 +131,7 @@ export default function LowStock() {
     clearState();
     handleClose();
   }
-console.log(reqProduct)
+
   async function insertProduct() {
     await setProductCode(reqProduct.product_code);
     await setProductName(reqProduct.product_name);
@@ -144,8 +142,23 @@ console.log(reqProduct)
     clearState();
     CloseSearchProduct();
   }
+  // função para adicionar os itens a listagem
+  async function insertListItens(){
+    await setListItens({
+      _id: productId,
+      product_code: productCode,
+      product_name: productName,
+      product_unit: productUnit,
+      product_qtyLow: productQtyLow,
+      product_price: productPrice,
+      product_totalPrice: totalPrice
+    })
+    console.log(listItens)
+    clearStateSearch();
+    
+  }
 
-  //inicio função procurar setor 
+  //inicio função procurar setor
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -155,7 +168,7 @@ console.log(reqProduct)
   };
   //fim função dialogo de setor
 
-  //inicio função procurar produto 
+  //inicio função procurar produto
   const OpenSearchProduct = () => {
     setOpenProduct(true);
   };
@@ -163,7 +176,7 @@ console.log(reqProduct)
     setOpenProduct(false);
     clearState();
   };
-  //fim função procurar produto 
+  //fim função procurar produto
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -263,10 +276,10 @@ console.log(reqProduct)
                                     }}
                                   >
                                     <TableCell component="th">
-                                      {reqSector.sector_code}
+                                      {reqSector ? reqSector.sector_code : "-"}
                                     </TableCell>
                                     <TableCell component="th">
-                                      {reqSector.sector_name}
+                                      {reqSector ? reqSector.sector_name : "-"}
                                     </TableCell>
                                   </TableRow>
                                 </TableBody>
@@ -305,7 +318,10 @@ console.log(reqProduct)
                               />
                             </Grid>
                             <Grid item xs={12} sm={1}>
-                              <IconButton size="normal" onClick={OpenSearchProduct}>
+                              <IconButton
+                                size="normal"
+                                onClick={OpenSearchProduct}
+                              >
                                 <SearchIcon />
                               </IconButton>
                             </Grid>
@@ -323,7 +339,9 @@ console.log(reqProduct)
                                     id="searchName"
                                     size="small"
                                     value={searchProduct}
-                                    onChange={(e) => setSearchProduct(e.target.value)}
+                                    onChange={(e) =>
+                                      setSearchProduct(e.target.value)
+                                    }
                                   />
                                   <IconButton
                                     size="normal"
@@ -352,10 +370,14 @@ console.log(reqProduct)
                                           }}
                                         >
                                           <TableCell component="th">
-                                            {reqProduct.product_code}
+                                            {reqProduct
+                                              ? reqProduct.product_code
+                                              : "-"}
                                           </TableCell>
                                           <TableCell component="th">
-                                            {reqProduct.product_name}
+                                            {reqProduct
+                                              ? reqProduct.product_name
+                                              : "-"}
                                           </TableCell>
                                         </TableRow>
                                       </TableBody>
@@ -396,7 +418,9 @@ console.log(reqProduct)
                                 label="Quantidade"
                                 size="small"
                                 value={productQtyLow}
-                                onChange={(e) => setProductQtyLow(e.target.value)}
+                                onChange={(e) =>
+                                  setProductQtyLow(e.target.value)
+                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -416,9 +440,9 @@ console.log(reqProduct)
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
-                            <Grid item xs={12} sm={12} >
-                              <TextField 
-                                sx={{  width: 120 }}                          
+                            <Grid item xs={12} sm={12}>
+                              <TextField
+                                sx={{ width: 120 }}
                                 label="Estoque atual"
                                 size="small"
                                 value={productQuantity}
@@ -426,7 +450,7 @@ console.log(reqProduct)
                             </Grid>
                             <Grid item xs={12} sm={2} align="right"></Grid>
                             <Grid item xs={12} sm={12} align="lefth">
-                              <Button variant="contained">Inserir Item</Button>
+                              <Button variant="contained" onClick={insertListItens}>Inserir Item</Button>
                             </Grid>
                           </Grid>
                         </Box>

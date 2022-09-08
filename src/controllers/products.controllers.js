@@ -77,5 +77,6 @@ module.exports = {
     };
     const product = await Product.findOneAndUpdate({ _id }, data, { new: true });
     res.json(product);
+    console.log(req.body)
   }
 }
