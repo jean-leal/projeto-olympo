@@ -26,6 +26,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import api from "../../../services/api";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 const mdTheme = createTheme();
 function TabPanel(props) {
@@ -79,34 +81,34 @@ export default function LowStock() {
   const [productUnit, setProductUnit] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productQtyLow, setProductQtyLow] = useState("");
-  const listItens = {"_id":"", "product_code":"", "product_name": "",
-   "product_unit": "", "product_qtyLow": "","product_price": "", "product_totalPrice": ""} 
+  const [listItens, setListItem] = useState([]);
+  const [newItem, setNewItem] = useState([]);
 
   const totalPrice = productPrice * productQtyLow;
+  const [addItem, setAddItem] = useState(false);
 
   const clearState = () => {
     setReqSector("");
     setSearchSector("");
     setSearchProduct("");
     setReqProduct("");
-    
   };
   const clearStateSearch = () => {
-    setProductCode("")
-    setProductName("")
-    setProductQuantity("")
-    setProductId("")
-    setProductPrice("")
-    setProductQtyLow("")
-    setProductUnit("")
-  }
+    setProductCode("");
+    setProductName("");
+    setProductQuantity("");
+    setProductId("");
+    setProductPrice("");
+    setProductQtyLow("");
+    setProductUnit("");
+  };
   const data = {
     sectorLowStock: {
       _id: sectorId,
       sector_code: sectorCode,
       sector_name: sectorName,
     },
-    list_itens: listItens
+    list_itens: listItens,
   };
 
   const handleChange = (event, newValue) => {
@@ -121,45 +123,61 @@ export default function LowStock() {
 
   async function productSearch() {
     await api.post("/api/products/search", { searchProduct }).then((res) => {
-      !res.data ? alert("Produto não encontrado") : setReqProduct(res.data)   
+      !res.data ? alert("Produto não encontrado") : setReqProduct(res.data);
     });
   }
 
   async function insertSector() {
-    await setSectorCode(reqSector.sector_code);
-    await setSectorName(reqSector.sector_name);
-    await setSectorId(reqSector._id);
+    setSectorCode(reqSector.sector_code);
+    setSectorName(reqSector.sector_name);
+    setSectorId(reqSector._id);
     clearState();
     handleClose();
   }
 
-  async function insertProduct() {
-    await setProductCode(reqProduct.product_code);
-    await setProductName(reqProduct.product_name);
-    await setProductUnit(reqProduct.product_unit);
-    await setProductQuantity(reqProduct.product_quantity);
-    await setProductPrice(reqProduct.product_price);
-    await setProductId(reqProduct._id);
+  function insertProduct() {
+    setProductCode(reqProduct.product_code);
+    setProductName(reqProduct.product_name);
+    setProductUnit(reqProduct.product_unit);
+    setProductQuantity(reqProduct.product_quantity);
+    setProductPrice(reqProduct.product_price);
+    setProductId(reqProduct._id);
     clearState();
     CloseSearchProduct();
   }
-
+  console.log(listItens);
   // função para adicionar os itens a listagem
-  async function insertListItens(){
-    await listItens.push({
+  function insertListItens() {
+    setNewItem({
       _id: productId,
       product_code: productCode,
       product_name: productName,
       product_unit: productUnit,
       product_qtyLow: productQtyLow,
       product_price: productPrice,
-      product_totalPrice: totalPrice
-    })
-    
-    clearStateSearch();
-    
+      product_totalPrice: totalPrice,
+    });
+    setAddItem(true);
   }
-  console.log(listItens)
+  if (addItem === true) {
+    addItemList();
+  } else {
+  }
+  function addItemList() {
+    if (listItens) {
+      setListItem([...listItens, newItem]);
+    } else {
+      setListItem([newItem]);
+    }
+    clearStateSearch();
+    setAddItem(false);
+  }
+
+  function deletItemList(index) {
+    let tempArray = [...listItens];
+    tempArray.splice(index, 1);
+    setListItem(tempArray);
+  }
 
   //inicio função procurar setor
   const handleClickOpen = () => {
@@ -203,7 +221,6 @@ export default function LowStock() {
             <Grid container spacing={1}>
               <Grid item sm={12}>
                 <Paper sx={{ p: 1 }}>
-                  <h2>Requisição de Consumo</h2>
                   <Grid container spacing={1}>
                     <Grid item xs={12} sm={2}>
                       <TextField
@@ -298,7 +315,9 @@ export default function LowStock() {
                       {/* FIM CONTEUDO PESQUISAR SETOR*/}
                     </Grid>
                     <Grid item sm={12}>
-                      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                      <Box
+                        sx={{ borderBottom: 1, borderColor: "divider", m: 0 }}
+                      >
                         <Tabs
                           value={value}
                           onChange={handleChange}
@@ -406,9 +425,6 @@ export default function LowStock() {
                                 defaultValue=""
                                 size="small"
                                 value={productName}
-                                onChange={(e) =>
-                                  setProductName(e.target.value)
-                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
@@ -417,9 +433,6 @@ export default function LowStock() {
                                 label="Unidade"
                                 size="small"
                                 value={productUnit}
-                                onChange={(e) =>
-                                  setProductUnit(e.target.value)
-                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -439,9 +452,6 @@ export default function LowStock() {
                                 defaultValue=""
                                 size="small"
                                 value={productPrice}
-                                onChange={(e) =>
-                                  setProductPrice(e.target.value)
-                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={5} align="right">
@@ -449,7 +459,6 @@ export default function LowStock() {
                                 label="Valor Total"
                                 size="small"
                                 value={totalPrice}
-                                
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
@@ -463,14 +472,23 @@ export default function LowStock() {
                             </Grid>
                             <Grid item xs={12} sm={2} align="right"></Grid>
                             <Grid item xs={12} sm={12} align="lefth">
-                              <Button variant="contained" onClick={insertListItens}>Inserir Item</Button>
+                              <Button
+                                variant="contained"
+                                onClick={insertListItens}
+                              >
+                                Inserir Item
+                              </Button>
                             </Grid>
                           </Grid>
                         </Box>
                       </TabPanel>
                       <TabPanel value={value} index={1}>
                         <TableContainer sx={{ maxHeight: 440 }}>
-                          <Table stickyHeader aria-label="sticky table">
+                          <Table
+                            stickyHeader
+                            size="small"
+                            aria-label="sticky table"
+                          >
                             <TableHead>
                               <TableRow>
                                 <TableCell>Código</TableCell>
@@ -479,24 +497,41 @@ export default function LowStock() {
                                 <TableCell>Quantidade</TableCell>
                                 <TableCell>Valor Unitário</TableCell>
                                 <TableCell>Valor Total</TableCell>
+                                <TableCell>Opções</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              <TableRow>
-                                <TableCell
-                                  component="th"
-                                  scope="row"
-                                ></TableCell>
-                                <TableCell
-                                  component="th"
-                                  scope="row"
-                                ></TableCell>
-                                <TableCell align="center">---</TableCell>
-                                <TableCell align="center">---</TableCell>
-                                <TableCell align="center">---</TableCell>
-                                <TableCell align="center">{}</TableCell>
-                                <TableCell align="center">{}</TableCell>
-                              </TableRow>
+                              {listItens.map((item, index) => (
+                                <TableRow key={item._id}>
+                                  <TableCell component="th">
+                                    {item.product_code}
+                                  </TableCell>
+                                  <TableCell component="th">
+                                    {item.product_name}
+                                  </TableCell>
+                                  <TableCell>{item.product_unit}</TableCell>
+                                  <TableCell>{item.product_qtyLow}</TableCell>
+                                  <TableCell>{item.product_price}</TableCell>
+                                  <TableCell>
+                                    {item.product_totalPrice}
+                                  </TableCell>
+                                  <TableCell>
+                                    <IconButton
+                                      aria-label="delete"
+                                      size="small"
+                                      onClick={() => deletItemList(index)}
+                                    >
+                                      <DeleteIcon fontSize="inherit" />
+                                    </IconButton>
+                                    <IconButton
+                                      aria-label="delete"
+                                      size="small"
+                                    >
+                                      <EditIcon fontSize="inherit" />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
                             </TableBody>
                           </Table>
                         </TableContainer>
