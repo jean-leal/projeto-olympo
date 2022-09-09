@@ -79,7 +79,8 @@ export default function LowStock() {
   const [productUnit, setProductUnit] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productQtyLow, setProductQtyLow] = useState("");
-  const [listItens, setListItens] = useState("");
+  const listItens = {"_id":"", "product_code":"", "product_name": "",
+   "product_unit": "", "product_qtyLow": "","product_price": "", "product_totalPrice": ""} 
 
   const totalPrice = productPrice * productQtyLow;
 
@@ -142,9 +143,10 @@ export default function LowStock() {
     clearState();
     CloseSearchProduct();
   }
+
   // função para adicionar os itens a listagem
   async function insertListItens(){
-    await setListItens({
+    await listItens.push({
       _id: productId,
       product_code: productCode,
       product_name: productName,
@@ -153,10 +155,11 @@ export default function LowStock() {
       product_price: productPrice,
       product_totalPrice: totalPrice
     })
-    console.log(listItens)
+    
     clearStateSearch();
     
   }
+  console.log(listItens)
 
   //inicio função procurar setor
   const handleClickOpen = () => {
@@ -403,6 +406,9 @@ export default function LowStock() {
                                 defaultValue=""
                                 size="small"
                                 value={productName}
+                                onChange={(e) =>
+                                  setProductName(e.target.value)
+                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
@@ -411,6 +417,9 @@ export default function LowStock() {
                                 label="Unidade"
                                 size="small"
                                 value={productUnit}
+                                onChange={(e) =>
+                                  setProductUnit(e.target.value)
+                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -430,6 +439,9 @@ export default function LowStock() {
                                 defaultValue=""
                                 size="small"
                                 value={productPrice}
+                                onChange={(e) =>
+                                  setProductPrice(e.target.value)
+                                }
                               />
                             </Grid>
                             <Grid item xs={12} sm={5} align="right">
@@ -437,6 +449,7 @@ export default function LowStock() {
                                 label="Valor Total"
                                 size="small"
                                 value={totalPrice}
+                                
                               />
                             </Grid>
                             <Grid item xs={12} sm={2}></Grid>
