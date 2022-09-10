@@ -27,7 +27,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import api from "../../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 
 const mdTheme = createTheme();
 function TabPanel(props) {
@@ -83,10 +82,17 @@ export default function LowStock() {
   const [productQtyLow, setProductQtyLow] = useState("");
   const [listItens, setListItem] = useState([]);
   const [newItem, setNewItem] = useState([]);
-
-  const totalPrice = productPrice * productQtyLow;
+  const [LowStockCode, setLowStockCode] = useState("")
   const [addItem, setAddItem] = useState(false);
 
+  const totalPrice = productPrice * productQtyLow;
+  
+  const totalPriceList = listItens.reduce(getTotal, 0)
+  function getTotal(total, item){
+    return total + item.product_totalPrice;
+  }
+ 
+  console.log(totalPriceList)
   const clearState = () => {
     setReqSector("");
     setSearchSector("");
@@ -103,14 +109,19 @@ export default function LowStock() {
     setProductUnit("");
   };
   const data = {
-    sectorLowStock: {
+    sector_code: LowStockCode,
+    sector_low_stock: {
       _id: sectorId,
       sector_code: sectorCode,
       sector_name: sectorName,
     },
-    list_itens: listItens,
+    list_itens: {
+      item_list : listItens
+     
+    }
   };
-
+  console.log(data)
+  console.log(listItens.length)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -145,7 +156,6 @@ export default function LowStock() {
     clearState();
     CloseSearchProduct();
   }
-  console.log(listItens);
   // função para adicionar os itens a listagem
   function insertListItens() {
     setNewItem({
@@ -155,7 +165,7 @@ export default function LowStock() {
       product_unit: productUnit,
       product_qtyLow: productQtyLow,
       product_price: productPrice,
-      product_totalPrice: totalPrice,
+      product_totalPrice: totalPrice
     });
     setAddItem(true);
   }
@@ -227,16 +237,11 @@ export default function LowStock() {
                         label="Número Documento"
                         id="outlined-size-small"
                         size="small"
+                        value={LowStockCode}
+                        onChange={(e) => setLowStockCode(e.target.value)}
                       />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        label="Data Emissão"
-                        id="outlined-size-small"
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}></Grid>
+                    </Grid>                    
+                    <Grid item xs={12} sm={9}></Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
                         label="Código Setor"
@@ -523,18 +528,15 @@ export default function LowStock() {
                                     >
                                       <DeleteIcon fontSize="inherit" />
                                     </IconButton>
-                                    <IconButton
-                                      aria-label="delete"
-                                      size="small"
-                                    >
-                                      <EditIcon fontSize="inherit" />
-                                    </IconButton>
                                   </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </TableContainer>
+                        <Grid item xs={12} sm={12} align="right">
+                      <h3>TOTAL: R${totalPriceList}</h3>
+                    </Grid>
                       </TabPanel>
                     </Grid>
                     <Grid item xs={12} sm={7}></Grid>
