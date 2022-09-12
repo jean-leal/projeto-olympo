@@ -8,7 +8,7 @@ const Group = require('./controllers/groups.controllers');
 const Subgroup = require('./controllers/subgroups.controllers');
 const Providers = require('./controllers/providers.controllers');
 const Sector = require('./controllers/sectors.controllers');
-
+const LowStock = require('./controllers/low-stock.controllers')
 
 routes.get('/',User.index);
 
@@ -33,6 +33,9 @@ routes.get('/api/products',Product.index);
 routes.get('/api/products.details/:_id', Product.details);
 routes.delete('/api/products/:_id', Product.delete);
 routes.put('/api/products', Product.update);
+routes.put('/api/products/update-stock', Product.updateStock);
+routes.post('/api/products/search.extortion-stock', Product.searchStock);
+
 
 //rotas de Grupos
 routes.post('/api/groups',Group.create);
@@ -63,5 +66,13 @@ routes.delete('/api/sectors/:_id', Sector.delete);
 routes.put('/api/sectors', Sector.update);
 routes.post('/api/sectors/search',Sector.search);//rota para pesquisa
 routes.get('/api/sectors/search',Sector.search);
+
+//rotas para baixa de estoque
+routes.post('/api/low-stock',LowStock.create);
+routes.get('/api/low-stock',LowStock.index);
+routes.get('/api/low-stock.details/:_id', LowStock.details);
+routes.delete('/api/low-stock/:_id', LowStock.delete);
+routes.put('/api/low-stock', LowStock.update);
+
 
 module.exports = routes;

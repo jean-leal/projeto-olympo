@@ -25,8 +25,8 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import api from "../../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import api from "../../../services/api";
 
 const mdTheme = createTheme();
 function TabPanel(props) {
@@ -82,17 +82,17 @@ export default function LowStock() {
   const [productQtyLow, setProductQtyLow] = useState("");
   const [listItens, setListItem] = useState([]);
   const [newItem, setNewItem] = useState([]);
-  const [LowStockCode, setLowStockCode] = useState("")
+  const [LowStockCode, setLowStockCode] = useState("");
   const [addItem, setAddItem] = useState(false);
+  let currentInventory = 0;
 
   const totalPrice = productPrice * productQtyLow;
-  
-  const totalPriceList = listItens.reduce(getTotal, 0)
-  function getTotal(total, item){
+
+  const totalPriceList = listItens.reduce(getTotal, 0);
+  function getTotal(total, item) {
     return total + item.product_totalPrice;
   }
- 
-  console.log(totalPriceList)
+
   const clearState = () => {
     setReqSector("");
     setSearchSector("");
@@ -108,20 +108,39 @@ export default function LowStock() {
     setProductQtyLow("");
     setProductUnit("");
   };
-  const data = {
-    sector_code: LowStockCode,
-    sector_low_stock: {
-      _id: sectorId,
-      sector_code: sectorCode,
-      sector_name: sectorName,
-    },
-    list_itens: {
-      item_list : listItens
-     
-    }
-  };
-  console.log(data)
-  console.log(listItens.length)
+  async function handleSubmit() {
+    const data = {
+      low_stock_code: LowStockCode,
+      sector_low_stock: {
+        _id: sectorId,
+        sector_code: sectorCode,
+        sector_name: sectorName,
+      },
+      list_itens: {
+        item_list: listItens,
+      },
+      total_price_document:totalPriceList
+    };
+    const response = await api.post("/api/low-stock", data);
+    /*if (
+      code !== "" &&
+      name !== "" &&
+      unit !== "" &&
+      price !== "" &&
+      quantity !== ""
+    ) {
+      const response = await api.post("/api/products", data);
+
+      if (response.status === 200) {
+        window.location.href = "/admin/products";
+      } else {
+        alert("erro de cadastro de produto");
+      }
+    } else {
+      alert("Preencha todos os dados!");
+    }*/
+  }
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -165,7 +184,7 @@ export default function LowStock() {
       product_unit: productUnit,
       product_qtyLow: productQtyLow,
       product_price: productPrice,
-      product_totalPrice: totalPrice
+      product_totalPrice: totalPrice,
     });
     setAddItem(true);
   }
@@ -173,6 +192,8 @@ export default function LowStock() {
     addItemList();
   } else {
   }
+
+  //Adiciona a item na lista que vai ser enviada para o banco
   function addItemList() {
     if (listItens) {
       setListItem([...listItens, newItem]);
@@ -181,12 +202,60 @@ export default function LowStock() {
     }
     clearStateSearch();
     setAddItem(false);
+    lowStockItem();
   }
 
+  // função para baixar o estoque do produto
+  async function lowStockItem() {
+    const updateStockItem = productQuantity - productQtyLow;
+    const updateStock = {
+      _id: productId,
+      product_quantity: updateStockItem,
+    };
+    console.log(updateStock);
+    const response = await api.put("/api/products/update-stock", updateStock);
+
+    if (!response.status === 200) {
+      alert("Erro na baixa do estoque!");
+    }
+  }
+
+  // exclui o item confirme o que foi passado no index da Array
   function deletItemList(index) {
     let tempArray = [...listItens];
     tempArray.splice(index, 1);
     setListItem(tempArray);
+    extortionStock(index);
+  }
+
+ // procura o item para extornar a quantidade conforme o estoque atual
+  async function searchStockExtortion(_id) {
+    await api
+      .post("api/products/search.extortion-stock", { _id })
+      .then((res) => {
+        !res.data
+          ? alert("Produto não encontrado")
+          : (currentInventory = res.data.product_quantity);
+      });
+    return;
+  }
+
+  //função para extornar o produto quando se aperta o excluir item
+  async function extortionStock(index) {
+    let tempArray = [...listItens];
+    const _id = tempArray[index]._id;
+    await searchStockExtortion(_id);
+    const updateStockItem =
+      Number(currentInventory) + Number(tempArray[index].product_qtyLow);
+
+    const updateStock = {
+      _id: tempArray[index]._id,
+      product_quantity: updateStockItem,
+    }
+    const response = await api.put("/api/products/update-stock", updateStock);
+    if (!response.status === 200) {
+      alert("Erro no extorno do estoque!");
+    }
   }
 
   //inicio função procurar setor
@@ -208,7 +277,7 @@ export default function LowStock() {
     clearState();
   };
   //fim função procurar produto
-
+  
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -240,7 +309,7 @@ export default function LowStock() {
                         value={LowStockCode}
                         onChange={(e) => setLowStockCode(e.target.value)}
                       />
-                    </Grid>                    
+                    </Grid>
                     <Grid item xs={12} sm={9}></Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
@@ -535,13 +604,13 @@ export default function LowStock() {
                           </Table>
                         </TableContainer>
                         <Grid item xs={12} sm={12} align="right">
-                      <h3>TOTAL: R${totalPriceList}</h3>
-                    </Grid>
+                          <h3>TOTAL: R${totalPriceList}</h3>
+                        </Grid>
                       </TabPanel>
                     </Grid>
                     <Grid item xs={12} sm={7}></Grid>
                     <Grid item xs={12} sm={3} align="right">
-                      <Button variant="contained">Salvar Documento</Button>
+                      <Button variant="contained" onClick={handleSubmit}>Salvar Documento</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}>
                       <Button variant="contained" color="error">

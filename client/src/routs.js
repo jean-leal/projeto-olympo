@@ -29,7 +29,10 @@ import Users from './pages/admin/users';
 import UsersEdit from './pages/admin/users/users.edit';
 import UsersRegister from './pages/admin/users/users.register';
 import Login from './pages/client/login';
+
 import LowStock from './pages/admin/stock/low-stock'
+import LowStockEdit from './pages/admin/stock/low-stock'
+import LowStockRegister from './pages/admin/stock/low-stock'
 
 
 //IMPORT CLIENT
@@ -75,6 +78,8 @@ export default function Rotas() {
         <Route path="/admin/sectors/edit/:idSector" element={<PrivateRoute> <SectorsEdit /> </PrivateRoute>} />
 
         <Route path="/admin/low-stock" element={<PrivateRoute> <LowStock /> </PrivateRoute>} />
+        <Route path="/admin/low-stock/register" element={<PrivateRoute> <LowStockRegister /> </PrivateRoute>} />
+        <Route path="/admin/low-stock/edit/:idLowStock" element={<PrivateRoute> <LowStockEdit /> </PrivateRoute>} />
 
       </Routes>
     </BrowserRouter>

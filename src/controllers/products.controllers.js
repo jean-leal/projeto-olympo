@@ -10,6 +10,11 @@ module.exports = {
     const productSearch = await Product.findOne({ product_name });
     res.json(productSearch);
   },
+  async searchStock(req, res) {    
+    const { _id } = req.body;
+    const product = await Product.findOne({ _id });
+    res.json(product);
+  },
   async create(req, res) {
     const {
       product_code,
@@ -54,6 +59,16 @@ module.exports = {
     const product = await Product.findByIdAndDelete({ _id });
     return res.json(product);
   },
+  async updateStock(req, res) {
+  
+    const {
+      _id,
+      product_quantity,
+      } = req.body;
+
+    const product = await Product.findOneAndUpdate({ _id }, {product_quantity}, { new: true });
+    res.json(product);
+  },
   async update(req, res) {
     const {
       _id,
@@ -77,6 +92,5 @@ module.exports = {
     };
     const product = await Product.findOneAndUpdate({ _id }, data, { new: true });
     res.json(product);
-    console.log(req.body)
   }
 }
