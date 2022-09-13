@@ -13,14 +13,7 @@ module.exports = {
       list_itens,
     } = req.body;
     let data = {};
-    data = {// isso tem que retirar depois, somente para teste
-      total_price_document,
-      low_stock_code,
-      sector_low_stock,
-      list_itens,
-    }
-    console.log(data.list_itens)
-    /*
+
     let lowStock = await LowStock.findOne({ low_stock_code });
 
     if (!lowStock) {
@@ -35,7 +28,7 @@ module.exports = {
       return res.status(200).json(lowStock);
     } else {
       return res.status(500).json({ msg: "falha de cadastro" });
-    }*/
+    }
   },
   async details(req, res) {
     const { _id } = req.params;
@@ -49,21 +42,24 @@ module.exports = {
   },
   async update(req, res) {
     const {
-      _id,
       total_price_document,
       low_stock_code,
       sector_low_stock,
       list_itens,
     } = req.body;
+    const search = await LowStock.findOne({ low_stock_code });
+    const _id = search._id
+    
     const data = {
       total_price_document,
       low_stock_code,
       sector_low_stock,
       list_itens,
     };
+   
     const lowStock = await LowStock.findOneAndUpdate({ _id }, data, {
       new: true,
-    });
+    });  
     res.json(lowStock);
   },
 };
