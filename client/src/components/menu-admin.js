@@ -186,6 +186,9 @@ export default function ManuAdmin({ title }) {
               <ListItemButton sx={{ pl: 4 }} href={'/admin/low-stock'}>
                 <ListItemText primary="Baixa de Estoque"  />
               </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} href={'/admin/low-report'}>
+                <ListItemText primary="Relatório de Baixa"  />
+              </ListItemButton>
             </List>
           </Collapse>
           <Divider sx={{ my: 1 }} />

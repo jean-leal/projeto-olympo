@@ -315,7 +315,7 @@ export default function LowStock() {
 
   //função procurar produto
   const OpenSearchProduct = () => {
-    if(reqSector !== ""){
+    if(sectorCode !== ""){
       setOpenProduct(true);
     }else{
       alert('Adicione o setor!')
@@ -664,7 +664,7 @@ export default function LowStock() {
                     </Grid>
                     <Grid item xs={12} sm={1}>
                       <Button variant="contained" color="error" onClick={deletDocument}>
-                        Cancelar
+                        Excluir
                       </Button>
                     </Grid>
                   </Grid>

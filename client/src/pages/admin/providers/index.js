@@ -91,13 +91,13 @@ export default function ListProviders() {
                               <TableCell align="center">{row.provider_name}</TableCell>
                               <TableCell align="center">{row.provider_fantasyName}</TableCell>
                               <TableCell align="center">{row.provider_status === 1 ?
-                                  <Chip label="Ativo" color="success" /> :
-                                  <Chip label="Inativo" color="error" />}</TableCell>
+                                  <Chip label="Ativo" color="success" size="small" /> :
+                                  <Chip label="Inativo" color="error" size="small" />}</TableCell>
                               <TableCell align="center">{row.provider_city}</TableCell>
                               <TableCell align="center">{row.provider_state}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                               <TableCell align="center">
-                                <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <ButtonGroup variant="contained" aria-label="outlined primary button group" size="small">
                                   <Button color="primary" href={'/admin/providers/edit/'+row._id}size="small">Editar</Button>
                                 </ButtonGroup>
                               </TableCell>

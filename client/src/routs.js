@@ -31,9 +31,9 @@ import UsersRegister from './pages/admin/users/users.register';
 import Login from './pages/client/login';
 
 import LowStock from './pages/admin/stock/low-stock'
-import LowStockEdit from './pages/admin/stock/low-stock'
-import LowStockRegister from './pages/admin/stock/low-stock'
-
+import LowStockEdit from './pages/admin/stock/low-stock-edit'
+import LowStockRegister from './pages/admin/stock/low-stock'  
+import LowStockReport from './pages/admin/stock/low-report'
 
 //IMPORT CLIENT
 import ProductDetails from './pages/client/products/product.details';
@@ -77,6 +77,7 @@ export default function Rotas() {
         <Route path="/admin/sectors/register" element={<PrivateRoute> <SectorsRegister /> </PrivateRoute>} />
         <Route path="/admin/sectors/edit/:idSector" element={<PrivateRoute> <SectorsEdit /> </PrivateRoute>} />
 
+        <Route path="/admin/low-report" element={<PrivateRoute> <LowStockReport /> </PrivateRoute>} />
         <Route path="/admin/low-stock" element={<PrivateRoute> <LowStock /> </PrivateRoute>} />
         <Route path="/admin/low-stock/register" element={<PrivateRoute> <LowStockRegister /> </PrivateRoute>} />
         <Route path="/admin/low-stock/edit/:idLowStock" element={<PrivateRoute> <LowStockEdit /> </PrivateRoute>} />
