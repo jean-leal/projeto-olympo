@@ -8,7 +8,7 @@ const DataSchema = new mongoose.Schema(
     provider_status: Number,
     provider_name: String,
     provider_fantasyName: String,
-    provider_cnpj: Number,
+    provider_cnpj: String,
     provider_ie: Number,
     provider_city: String,
     provider_state: String,

@@ -96,7 +96,7 @@ export default function LowStock() {
     };
     editLowStock();
   }, [lowStockCode]);
-
+ 
 
   const totalPrice = productPrice * productQtyLow;
 
@@ -226,7 +226,7 @@ export default function LowStock() {
   } else {
   }
 
-  //Adiciona a item na lista que vai ser enviada para o banco
+  //Adiciona o item na lista que vai ser enviada para o banco
   function addItemList() {
     if (listItens) {
       setListItem([...listItens, newItem]);
@@ -259,6 +259,7 @@ export default function LowStock() {
      for (let i = tempArray.length - 1; i >= 0; i--) {
       tempArray.splice(i, 1);
       await extortionStock(i);
+      handleDelete()
 
     }
     if (tempArray.length === 0) {
@@ -326,6 +327,18 @@ export default function LowStock() {
     setOpenProduct(false);
     clearState();
   }; 
+
+   //função para deletar a baixa completa
+   async function handleDelete() {
+    if (window.confirm('Deseja realmente excluir esta baixa? ')) {
+      const result = await api.post('/api/low-stock-code/' ,{lowStockCode} );
+      if (result.status === 200) {
+        window.location.href = '/admin/low-stock'
+      } else {
+        alert('Ocorreu um erro. Por favor tente novamente');
+      }
+    }
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>

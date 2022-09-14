@@ -144,7 +144,7 @@ export default function LowStock() {
     if (lowStockCode !== "" && sectorId !== "" && sectorCode !== "") {
       const response = await api.put("/api/low-stock", update_data);
       if (response.status === 200) {
-        window.location.href = "/admin/low-stock";
+        window.location.href = "/admin/low-report";
       } else {
         alert("Erro de finalização de baixa!");
       }

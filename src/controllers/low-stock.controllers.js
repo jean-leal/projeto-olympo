@@ -55,6 +55,14 @@ module.exports = {
     const lowStock = await LowStock.findByIdAndDelete({ _id });
     return res.json(lowStock);
   },
+  async deleteCode(req, res) {
+    const { lowStockCode} = req.body;
+    let low_stock_code = lowStockCode;
+    let delLowStock = await LowStock.findOne({low_stock_code})
+    const _id = delLowStock._id;    
+    const lowStock = await LowStock.findByIdAndDelete({ _id });
+    return res.json(lowStock);
+  },
   async update(req, res) {
     const {
       total_price_document,
