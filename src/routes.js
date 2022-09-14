@@ -73,6 +73,6 @@ routes.get('/api/low-stock',LowStock.index);
 routes.get('/api/low-stock.details/:_id', LowStock.details);
 routes.delete('/api/low-stock/:_id', LowStock.delete);
 routes.put('/api/low-stock', LowStock.update);
-
+routes.post('/api/low-stock/search',LowStock.search);
 
 module.exports = routes;

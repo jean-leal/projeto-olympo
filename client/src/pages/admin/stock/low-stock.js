@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -82,10 +82,20 @@ export default function LowStock() {
   const [productQtyLow, setProductQtyLow] = useState("");
   const [listItens, setListItem] = useState([]);
   const [newItem, setNewItem] = useState([]);
-  const [LowStockCode, setLowStockCode] = useState("");
+  const [lowStockCode, setLowStockCode] = useState(0);
   const [addItem, setAddItem] = useState(false);
   let currentInventory = 0;
 
+  useEffect(() => {
+    const editLowStock = () => {
+      if (lowStockCode === 0) {
+        api.post("/api/low-stock/search", { lowStockCode }).then((res) => {
+          setLowStockCode(res.data)
+        });
+      } else { }
+    };
+    editLowStock();
+  }, [lowStockCode]);
 
 
   const totalPrice = productPrice * productQtyLow;
@@ -110,10 +120,10 @@ export default function LowStock() {
     setProductQtyLow("");
     setProductUnit("");
   };
-  
-  async function saveDocument(){
+
+  async function saveDocument() {
     const update_data = {
-      low_stock_code: LowStockCode,
+      low_stock_code: lowStockCode,
       sector_low_stock: {
         _id: sectorId,
         sector_code: sectorCode,
@@ -122,24 +132,24 @@ export default function LowStock() {
       list_itens: {
         item_list: listItens,
       },
-      total_price_document:totalPriceList
+      total_price_document: totalPriceList
     };
-    if (update_data.low_stock_code !== "" && update_data.sector_low_stock !== "" && update_data.list_itens !== "" && update_data.total_price_document !== "") {
+    
+    if (lowStockCode !== "" && sectorId !== "" && sectorCode !== "") {
       const response = await api.put("/api/low-stock", update_data);
-
       if (response.status === 200) {
-        alert('documento finalizado co sucesso')
+        window.location.href = "/admin/low-stock";
       } else {
-        alert("Erro de atualização de usuário!");
+        alert("Erro de finalização de baixa!");
       }
     } else {
       alert("Preencha todos os dados!");
     }
   }
 
-  async function startRegister() {  
+  async function startRegister() {
     const data = {
-      low_stock_code: LowStockCode,
+      low_stock_code: lowStockCode,
       sector_low_stock: {
         _id: reqSector._id,
         sector_code: reqSector.sector_code,
@@ -148,16 +158,10 @@ export default function LowStock() {
       list_itens: {
         item_list: listItens,
       },
-      total_price_document:totalPriceList
+      total_price_document: totalPriceList
     };
-    if ( data.sector_low_stock._id !== "" && data.sector_low_stock.sector_code !== "" && data.sector_low_stock.sector_name !== "" && LowStockCode !== "") {
+    if (data.sector_low_stock._id !== "" && data.sector_low_stock.sector_code !== "" && data.sector_low_stock.sector_name !== "" && lowStockCode !== "") {
       const response = await api.post("/api/low-stock", data);
-
-      if (response.status === 200) {
-        alert("cadastro efetuado");
-      } else {
-        alert("erro de cadastro de produto");
-      }
     } else {
       alert("Preencha todos os dados!");
     }
@@ -183,10 +187,10 @@ export default function LowStock() {
     setSectorCode(reqSector.sector_code);
     setSectorName(reqSector.sector_name);
     setSectorId(reqSector._id);
-    handleClose();   
+    handleClose();
     startRegister()
   }
- 
+
   function insertProduct() {
     setProductCode(reqProduct.product_code);
     setProductName(reqProduct.product_name);
@@ -197,23 +201,24 @@ export default function LowStock() {
     clearState();
     CloseSearchProduct();
   }
+
   // função para adicionar os itens a listagem
   function insertListItens() {
-    if(productId !== "" && productCode !== "" && productName !== "" && productUnit !== "" && totalPrice !== "" &&
-    productQtyLow !== "" && productPrice !== ""){
+    if (productId !== "" && productCode !== "" && productName !== "" && productUnit !== "" && totalPrice !== "" &&
+      productQtyLow !== "" && productPrice !== "") {
       setNewItem({
-      _id: productId,
-      product_code: productCode,
-      product_name: productName,
-      product_unit: productUnit,
-      product_qtyLow: productQtyLow,
-      product_price: productPrice,
-      product_totalPrice: totalPrice,
-    });
-    setAddItem(true);
-  }else{
-    alert("informar todos os campos ")
-  }
+        _id: productId,
+        product_code: productCode,
+        product_name: productName,
+        product_unit: productUnit,
+        product_qtyLow: productQtyLow,
+        product_price: productPrice,
+        product_totalPrice: totalPrice,
+      });
+      setAddItem(true);
+    } else {
+      alert("informar todos os campos ")
+    }
   }
 
   if (addItem === true) {
@@ -247,6 +252,20 @@ export default function LowStock() {
     }
   }
 
+  //deleta o documento inteiro, percorre o array e retorna todos os itens para o estoque. 
+  async function deletDocument() {
+    let tempArray = [...listItens];
+    tempArray.reverse();
+     for (let i = tempArray.length - 1; i >= 0; i--) {
+      tempArray.splice(i, 1);
+      await extortionStock(i);
+
+    }
+    if (tempArray.length === 0) {
+      setListItem(tempArray);
+    } else{}
+  }
+
   // exclui o item confirme o que foi passado no index da Array
   function deletItemList(index) {
     let tempArray = [...listItens];
@@ -255,7 +274,7 @@ export default function LowStock() {
     extortionStock(index);
   }
 
- // procura o item para extornar a quantidade conforme o estoque atual
+  // procura o item para extornar a quantidade conforme o estoque atual
   async function searchStockExtortion(_id) {
     await api
       .post("api/products/search.extortion-stock", { _id })
@@ -285,7 +304,7 @@ export default function LowStock() {
     }
   }
 
-  //inicio função procurar setor
+  // função procurar setor
   const handleClickOpen = () => {
     setOpen(true);
     clearState();
@@ -293,18 +312,21 @@ export default function LowStock() {
   const handleClose = () => {
     setOpen(false);
   };
-  //fim função dialogo de setor
 
-  //inicio função procurar produto
+  //função procurar produto
   const OpenSearchProduct = () => {
-    setOpenProduct(true);
+    if(reqSector !== ""){
+      setOpenProduct(true);
+    }else{
+      alert('Adicione o setor!')
+    }
+    
   };
   const CloseSearchProduct = () => {
     setOpenProduct(false);
     clearState();
-  };
-  //fim função procurar produto
-  
+  }; 
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -333,8 +355,8 @@ export default function LowStock() {
                         label="Número Documento"
                         id="outlined-size-small"
                         size="small"
-                        value={LowStockCode}
-                        onChange={(e) => setLowStockCode(e.target.value)}
+                        value={lowStockCode}
+
                       />
                     </Grid>
                     <Grid item xs={12} sm={9}></Grid>
@@ -344,7 +366,7 @@ export default function LowStock() {
                         id="outlined-size-small"
                         size="small"
                         value={sectorCode}
-                       
+
                       />
                     </Grid>
                     <Grid item xs={12} sm={1}>
@@ -488,9 +510,9 @@ export default function LowStock() {
                                         <TableRow
                                           sx={{
                                             "&:last-child td, &:last-child th":
-                                              {
-                                                border: 0,
-                                              },
+                                            {
+                                              border: 0,
+                                            },
                                           }}
                                         >
                                           <TableCell component="th">
@@ -641,7 +663,7 @@ export default function LowStock() {
                       <Button variant="contained" onClick={saveDocument}>Salvar Documento</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}>
-                      <Button variant="contained" color="error">
+                      <Button variant="contained" color="error" onClick={deletDocument}>
                         Cancelar
                       </Button>
                     </Grid>
