@@ -14,15 +14,29 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import api from "../../../services/api";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { IMaskInput } from "react-imask";
 
 const mdTheme = createTheme();
+
+const TextMaskCustom = React.forwardRef(function TextMaskCustom(props, ref) {
+  const { onChange, ...other } = props;
+  return (
+    <IMaskInput
+      {...other}
+      mask="00.000.000/0000-00"
+      inputRef={ref}
+      onAccept={(value) => onChange({ target: { name: props.name, value } })}
+      overwrite
+    />
+  );
+});
 
 export default function ProvidersRegister() {
   const [code, setCode] = useState("");
   const [status, setStatus] = useState("");
   const [fantasyName, setFantasyName] = useState("");
   const [name, setName] = useState("");
-  const [cnpj, setCNPJ] = useState("");
   const [ie, setIE] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -33,6 +47,8 @@ export default function ProvidersRegister() {
   const [phoneContact, setPhoneContact] = useState("");
   const [emailContact, setEmailContact] = useState("");
   const [contact, setContact] = useState("");
+
+  let cnpj = '';
 
   async function handleSubmit() {
     const data = {
@@ -52,8 +68,14 @@ export default function ProvidersRegister() {
       provider_emailContact: emailContact,
       provider_contact: contact,
     };
-    console.log(data)
-    if (code !== "" && name !== "" && cnpj !== "" && ie !== "" && phoneContact !== "") {
+    console.log(data);
+    if (
+      code !== "" &&
+      name !== "" &&
+      cnpj !== "" &&
+      ie !== "" &&
+      phoneContact !== ""
+    ) {
       const response = await api.post("/api/providers", data);
 
       if (response.status === 200) {
@@ -65,6 +87,20 @@ export default function ProvidersRegister() {
       alert("Preencha todos os dados!");
     }
   }
+
+  // inincio da função de mascara de CNPJ
+  const [values, setValues] = useState({
+    textmask: "",
+  });
+  
+  cnpj = (values.textmask.replace(/[^0-9]/g, ""));
+
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -104,17 +140,21 @@ export default function ProvidersRegister() {
                       />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                      <TextField
-                        required
-                        id="cnpj"
-                        name="cnpj"
-                        label="CNPJ"
-                        fullWidth
-                        autoComplete="none"
-                        size="small"
-                        value={cnpj}
-                        onChange={(e) => setCNPJ(e.target.value)}
-                      />
+                      
+                        <FormControl>
+                          <InputLabel   required size="small" htmlFor="component-outlined">
+                            CNPJ
+                          </InputLabel>
+                          <OutlinedInput                          
+                            size="small"
+                            id="component-outlined"
+                            value={values.textmask}
+                            onChange={handleChange}
+                            name="textmask"
+                            label="Name"
+                            inputComponent={TextMaskCustom}
+                          />
+                        </FormControl>                     
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
@@ -246,7 +286,7 @@ export default function ProvidersRegister() {
                         autoComplete="none"
                         size="small"
                         value={cep}
-                        onChange={(e) => setCEP (e.target.value)}
+                        onChange={(e) => setCEP(e.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>

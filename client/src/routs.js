@@ -35,6 +35,7 @@ import LowStockEdit from './pages/admin/stock/low-stock-edit'
 import LowStockRegister from './pages/admin/stock/low-stock'  
 import LowStockReport from './pages/admin/stock/low-report'
 
+import Teste from './pages/admin/providers/teste'
 //IMPORT CLIENT
 import ProductDetails from './pages/client/products/product.details';
 
@@ -81,6 +82,8 @@ export default function Rotas() {
         <Route path="/admin/low-stock" element={<PrivateRoute> <LowStock /> </PrivateRoute>} />
         <Route path="/admin/low-stock/register" element={<PrivateRoute> <LowStockRegister /> </PrivateRoute>} />
         <Route path="/admin/low-stock/edit/:idLowStock" element={<PrivateRoute> <LowStockEdit /> </PrivateRoute>} />
+
+        <Route path="/admin/teste" element={<PrivateRoute> <Teste /> </PrivateRoute>} />
 
       </Routes>
     </BrowserRouter>
