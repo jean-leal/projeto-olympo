@@ -26,6 +26,6 @@ mongoose.connect('mongodb+srv://admin:086015@cluster0.k0ngrzw.mongodb.net/projec
         return console.log(err);
     });
     
-app.listen(port, function(){
+app.listen(process.env.PORT || port, function(){
     console.log(`Servidor rodando ${port}`);
 })
