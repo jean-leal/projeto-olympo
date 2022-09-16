@@ -68,7 +68,7 @@ export default function ProvidersRegister() {
       provider_emailContact: emailContact,
       provider_contact: contact,
     };
-    console.log(data);
+   
     if (
       code !== "" &&
       name !== "" &&
@@ -90,11 +90,10 @@ export default function ProvidersRegister() {
 
   // inincio da função de mascara de CNPJ
   const [values, setValues] = useState({
-    textmask: "",
+    textmask: '',
   });
   
   cnpj = (values.textmask.replace(/[^0-9]/g, ""));
-
   const handleChange = (event) => {
     setValues({
       ...values,

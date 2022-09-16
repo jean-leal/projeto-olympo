@@ -54,7 +54,7 @@ export default function UserRegister() {
       const response = await api.put('/api/users', data);
 
       if (response.status === 200) {
-        window.location.href = '/'
+        window.location.href = '/admin/users'
       } else {
         alert('Erro de atualização de usuário!');
       }

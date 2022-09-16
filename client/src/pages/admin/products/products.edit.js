@@ -59,6 +59,7 @@ export default function UserRegister() {
   }, []);
 
   async function handleSubmit() {
+   
     const data = {
       _id: idProduct,
       product_code: code,
@@ -229,7 +230,7 @@ export default function UserRegister() {
                         autoComplete="none"
                         size="small"
                         value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        onChange={(e) => setPrice((e.target.value).replace(',', '.'))}
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
@@ -242,7 +243,7 @@ export default function UserRegister() {
                         autoComplete="none"
                         size="small"
                         value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
+                        onChange={(e) => setQuantity((e.target.value).replace(',', '.'))}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12}>

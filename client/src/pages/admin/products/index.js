@@ -112,7 +112,7 @@ export default function ListProducts() {
                               {row.product_subgroup.subgroup_code}
                             </TableCell>
                             <TableCell align="center">
-                              {row.product_quantity}
+                              {new String(row.product_quantity).replace(".", ",")}
                             </TableCell>
                             <TableCell align="center">
                               {new String(row.product_price).replace(".", ",")}

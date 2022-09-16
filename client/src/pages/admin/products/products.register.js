@@ -57,8 +57,8 @@ export default function ProductsRegister() {
         subgroup_code: subgroup.subgroup_code,
         subgroup_name: subgroup.subgroup_name,
       },
-      product_price: price,
-      product_quantity: quantity,
+      product_price: price.replace(',', '.'),
+      product_quantity: quantity.replace(',', '.'),
       product_status: status
     }
     

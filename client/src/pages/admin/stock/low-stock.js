@@ -98,7 +98,7 @@ export default function LowStock() {
   }, [lowStockCode]);
  
 
-  const totalPrice = productPrice * productQtyLow;
+  const totalPrice = productPrice * (productQtyLow).replace(',', '.');
 
   const totalPriceList = listItens.reduce(getTotal, 0);
   function getTotal(total, item) {
